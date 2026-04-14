@@ -9,6 +9,12 @@ permalink: /presentation-notes/
 
 ## 15분 세미나 구성 (슬라이드 12장)
 
+권장 시간 배분:
+- Intro + Problem: 3분
+- Method: 5분
+- Experiments + Ablation: 5분
+- Limitations + Q&A setup: 2분
+
 ### Slide 1. Title & One-liner
 - 핵심 문장: "이 논문은 memorability를 예측하는 연구가 아니라 개선 행동을 생성하는 연구다."
 - 멘트: 오늘은 MemFeed 문제정의, MemCoach 알고리즘, MemBench 평가설계를 순서대로 보겠습니다.
@@ -84,3 +90,8 @@ A. oracle은 target view 정보를 직접 보므로 상한선에 가깝고, MemC
 1. 방법 섹션에서 식 2개를 정확히 판서/설명할 수 있는지
 2. IR/RM/PPL 정의를 혼동 없이 말할 수 있는지
 3. "왜 이 문제가 prediction보다 중요한가"를 30초 내 설명 가능한지
+
+## 백업 슬라이드 제안
+1. Eq.(3), Eq.(4)를 한 장에 묶은 수식 슬라이드
+2. Table 2를 baseline family별로 색상 강조한 슬라이드
+3. Figure 7 failure case만 따로 떼어낸 토론 슬라이드
