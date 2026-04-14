@@ -45,7 +45,9 @@ title: ""
 </div>
 
 <div class="video-frame">
-  <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" title="MemCoach Demo Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  <video controls muted loop playsinline preload="metadata" poster="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/photo_before.jpg">
+    <source src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/kling_blend_frames.mp4" type="video/mp4" />
+  </video>
 </div>
 
 ## Quick Access

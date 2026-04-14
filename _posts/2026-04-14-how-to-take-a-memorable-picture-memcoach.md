@@ -49,7 +49,9 @@ image: /assets/images/og-memcoach.svg
 
 ## Project Demo Video
 <div class="video-frame">
-  <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" title="MemCoach Project Demo Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  <video controls muted loop playsinline preload="metadata" poster="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/photo_before.jpg">
+    <source src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/kling_blend_frames.mp4" type="video/mp4" />
+  </video>
 </div>
 
 데모 영상에서 확인할 포인트:
