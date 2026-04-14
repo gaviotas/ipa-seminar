@@ -14,11 +14,13 @@ image: /assets/images/og-memcoach.svg
 ## Table of Contents
 - [Key Contributions](#key-contributions)
 - [Abstract](#abstract)
+- [Problem Setting](#problem-setting)
 - [Method](#method)
 - [MemBench](#membench)
+- [Evaluation Protocol](#evaluation-protocol)
 - [Qualitative Results](#qualitative-results)
 - [Quantitative Results](#quantitative-results)
-- [Demo](#demo)
+- [Critical Discussion](#critical-discussion)
 - [한계와 토론](#한계와-토론)
 - [세미나 Q&A](#세미나-qa)
 - [References](#references)
@@ -41,6 +43,16 @@ image: /assets/images/og-memcoach.svg
 - Before: "이 사진 점수는 얼마인가"
 - After: "다음 샷에서 무엇을 바꾸면 되는가"
 
+## Problem Setting
+논문의 태스크는 입력 이미지 \(I\)를 받아, 사람이 바로 실행 가능한 피드백 텍스트 \(f\)를 생성하는 문제로 볼 수 있습니다.
+
+요구 조건은 3가지입니다.
+1. **Actionability**: 구체적으로 무엇을 바꿔야 하는지 지시할 것
+2. **Human interpretability**: 사진 비전문가도 이해 가능한 언어일 것
+3. **Memorability-oriented**: 미적 향상 일반론이 아니라, 기억도 향상에 초점을 둘 것
+
+핵심은 점수 예측 정확도 자체보다, 피드백이 실제 수정 행동으로 이어질 수 있는지에 있습니다.
+
 ## Method
 MemCoach는 teacher-student 대비 생성과 activation steering을 결합합니다.
 
@@ -52,6 +64,14 @@ MemCoach는 teacher-student 대비 생성과 activation steering을 결합합니
   <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/method.webp" alt="MemCoach method overview" loading="lazy" />
   <figcaption>Method overview. 학습 재시작 없이 내부 표현 조향으로 피드백 품질을 개선.</figcaption>
 </figure>
+
+방법론 해석 포인트:
+- **Teacher 신호의 역할**: “더 기억에 남는 방향”으로 정렬된 표현을 제공
+- **Student의 역할**: 일반 피드백 생성의 기본 언어 능력 유지
+- **Steering의 장점**: 추가 학습 비용 없이, 추론 단계에서 목적 지향성을 주입
+
+발표에서 강조할 문장:
+> “이 방법은 모델 파라미터를 다시 학습하기보다, 활성값의 방향을 조정해 목적 함수의 성격을 바꾼다.”
 
 ## MemBench
 MemFeed 평가를 위해 제안된 벤치마크입니다.
@@ -71,11 +91,28 @@ MemFeed 평가를 위해 제안된 벤치마크입니다.
   </figure>
 </div>
 
+## Evaluation Protocol
+프로젝트 설명 기준으로, 평가는 단일 지표가 아니라 복합적으로 구성됩니다.
+
+1. **Editing-based memorability improvement**
+피드백을 바탕으로 생성/편집된 결과가 실제로 기억도 개선 방향을 보이는지 측정
+2. **Text quality proxy (e.g., perplexity-related analysis)**
+피드백 텍스트의 품질과 자연스러움을 함께 점검
+
+의미:
+- 단순히 “문장이 그럴듯한가”가 아니라,
+- “행동 가능한 조언이 실제 개선으로 연결되는가”를 보려는 설계입니다.
+
 ## Qualitative Results
 <figure class="media-panel">
   <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/qualitatives-feedback.webp" alt="MemCoach qualitative feedback results" loading="lazy" />
   <figcaption>피드백 품질의 질적 비교: 사용자 행동 지시의 구체성에 주목.</figcaption>
 </figure>
+
+읽는 포인트:
+- 제안형 문장(“무엇을 강조/이동/정리”)이 구체적인지
+- 장면 설명에서 멈추지 않고 수정 지시로 이어지는지
+- 촬영 맥락에서 즉시 실행 가능한지
 
 ## Quantitative Results
 <figure class="media-panel">
@@ -83,23 +120,20 @@ MemFeed 평가를 위해 제안된 벤치마크입니다.
   <figcaption>여러 오픈 MLLM 설정에서의 정량 비교 결과.</figcaption>
 </figure>
 
-## Demo
-<div class="video-frame">
-  <video controls muted loop playsinline preload="metadata" poster="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/photo_before.jpg">
-    <source src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/kling_blend_frames.mp4" type="video/mp4" />
-  </video>
-</div>
+정량 결과를 발표에서 해석할 때는 아래 두 가지를 분리해 설명하는 것이 좋습니다.
+1. **모델 비교 관점**: 어떤 MLLM 백본에서도 개선이 유지되는가
+2. **과제 적합성 관점**: 점수 개선이 실제 actionable feedback 품질과 함께 움직이는가
 
-<div class="media-grid">
-  <figure class="media-panel">
-    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/photo_before.jpg" alt="Demo before image" loading="lazy" />
-    <figcaption>Before</figcaption>
-  </figure>
-  <figure class="media-panel">
-    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/photo_after.jpg" alt="Demo after image" loading="lazy" />
-    <figcaption>After</figcaption>
-  </figure>
-</div>
+## Critical Discussion
+이 논문이 중요한 이유는 성능 숫자 자체보다, 문제 설정 전환에 있습니다.
+
+- 기존: memorability를 예측/편집의 대상로 취급
+- 제안: memorability를 “사용자에게 가르칠 수 있는 대상”으로 재정의
+
+이 전환은 HCI 관점에서도 의미가 큽니다.
+- 피드백 시스템이 단순 평가자에서 코치로 바뀜
+- 캡처 시점 의사결정(구도, 표정, 피사체 배치)에 직접 개입 가능
+- 장기적으로는 개인화 촬영 어시스턴트로 확장 가능
 
 ## 한계와 토론
 1. 기억도의 개인차/문화차를 얼마나 포괄하는가

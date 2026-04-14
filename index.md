@@ -84,22 +84,12 @@ title: ""
 </section>
 
 <section class="section-card">
-  <h2>Demo</h2>
-  <div class="video-frame">
-    <video controls muted loop playsinline preload="metadata" poster="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/photo_before.jpg">
-      <source src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/kling_blend_frames.mp4" type="video/mp4" />
-    </video>
-  </div>
-  <div class="media-grid">
-    <figure class="media-panel">
-      <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/photo_before.jpg" alt="Before applying feedback" loading="lazy" />
-      <figcaption>Before</figcaption>
-    </figure>
-    <figure class="media-panel">
-      <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/photo_after.jpg" alt="After applying feedback" loading="lazy" />
-      <figcaption>After</figcaption>
-    </figure>
-  </div>
+  <h2>Interpretation for Seminar</h2>
+  <ul>
+    <li>이 논문은 점수 예측 성능 경쟁보다, 사용자 행동으로 연결되는 피드백 설계에 기여합니다.</li>
+    <li>Training-free steering은 실험 반복 비용을 줄여 연구/제품 양쪽에서 실용성이 높습니다.</li>
+    <li>평가도 텍스트 품질만 보지 않고, 편집 기반 개선 효과까지 연결해 보려는 점이 중요합니다.</li>
+  </ul>
 </section>
 
 ## Quick Access
