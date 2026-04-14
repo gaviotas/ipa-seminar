@@ -12,108 +12,96 @@ image: /assets/images/og-memcoach.svg
 > 발표용 핵심 한 줄: 이 논문은 "기억도 점수 예측"을 "기억도 향상을 위한 행동 지시"로 확장한다.
 
 ## Table of Contents
-- [TL;DR](#tldr)
-- [문제 정의와 동기](#문제-정의와-동기)
-- [제안 방법: MemCoach](#제안-방법-memcoach)
-- [벤치마크: MemBench](#벤치마크-membench)
-- [결과와 해석](#결과와-해석)
+- [Key Contributions](#key-contributions)
+- [Abstract](#abstract)
+- [Method](#method)
+- [MemBench](#membench)
+- [Qualitative Results](#qualitative-results)
+- [Quantitative Results](#quantitative-results)
+- [Demo](#demo)
 - [한계와 토론](#한계와-토론)
 - [세미나 Q&A](#세미나-qa)
 - [References](#references)
 
-## TL;DR
-기존 memorability 연구는 이미지가 얼마나 기억에 남는지 **예측**하는 데 집중해 왔습니다.
-이 논문은 여기서 한 걸음 더 나아가, 촬영 시점에 사용자가 당장 적용할 수 있는 **actionable feedback**을 생성합니다.
-
-핵심 기여 3가지:
+## Key Contributions
 1. **MemFeed**: 기억도 향상을 위한 피드백 생성 태스크 정의
 2. **MemCoach**: 추가 파인튜닝 없이 activation steering 기반으로 피드백 개선
 3. **MemBench**: 비교 가능한 평가용 벤치마크 공개
 
-## Visual Highlights
 <figure class="media-panel">
-  <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/teaser.webp" alt="MemCoach teaser figure from the paper" loading="lazy" />
-  <figcaption>Figure 1. 논문의 핵심 메시지를 요약한 teaser (출처: MemCoach 공식 리포지토리)</figcaption>
+  <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/teaser.webp" alt="MemCoach teaser figure" loading="lazy" />
+  <figcaption>Teaser. 문제 정의와 기여를 한 장으로 요약한 핵심 도판.</figcaption>
 </figure>
+
+## Abstract
+기존 memorability 연구는 이미지가 얼마나 기억에 남는지 **예측**하는 데 집중해 왔습니다.
+이 논문은 촬영 시점에 사용자가 당장 적용할 수 있는 **actionable feedback** 생성으로 문제를 확장합니다.
+
+핵심 메시지:
+- Before: "이 사진 점수는 얼마인가"
+- After: "다음 샷에서 무엇을 바꾸면 되는가"
+
+## Method
+MemCoach는 teacher-student 대비 생성과 activation steering을 결합합니다.
+
+- Stage A: Contrastive Data Generation
+- Stage B: Steering Vector Extraction
+- Stage C: Inference-Time Steering
+
+<figure class="media-panel">
+  <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/method.webp" alt="MemCoach method overview" loading="lazy" />
+  <figcaption>Method overview. 학습 재시작 없이 내부 표현 조향으로 피드백 품질을 개선.</figcaption>
+</figure>
+
+## MemBench
+MemFeed 평가를 위해 제안된 벤치마크입니다.
+
+- 총 **7.97k rows**
+- train **6.35k** / test **1.63k**
+- 이미지 + 액션 텍스트 + 점수 정보
 
 <div class="media-grid">
   <figure class="media-panel">
-    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/method.webp" alt="MemCoach method overview" loading="lazy" />
-    <figcaption>Figure 2. MemCoach 파이프라인 개요</figcaption>
+    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/data-pipeline.webp" alt="MemBench data pipeline" loading="lazy" />
+    <figcaption>Data generation 및 evaluation 파이프라인.</figcaption>
   </figure>
   <figure class="media-panel">
-    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/table-results.webp" alt="MemCoach quantitative table results" loading="lazy" />
-    <figcaption>Figure 3. 정량 결과 테이블 (주요 지표 비교)</figcaption>
+    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/statistics.webp" alt="MemBench statistics" loading="lazy" />
+    <figcaption>MemBench 통계 및 데이터 분포 요약.</figcaption>
   </figure>
 </div>
 
-## Project Demo Video
+## Qualitative Results
+<figure class="media-panel">
+  <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/qualitatives-feedback.webp" alt="MemCoach qualitative feedback results" loading="lazy" />
+  <figcaption>피드백 품질의 질적 비교: 사용자 행동 지시의 구체성에 주목.</figcaption>
+</figure>
+
+## Quantitative Results
+<figure class="media-panel">
+  <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/table-results.webp" alt="MemCoach quantitative result table" loading="lazy" />
+  <figcaption>여러 오픈 MLLM 설정에서의 정량 비교 결과.</figcaption>
+</figure>
+
+## Demo
 <div class="video-frame">
   <video controls muted loop playsinline preload="metadata" poster="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/photo_before.jpg">
     <source src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/kling_blend_frames.mp4" type="video/mp4" />
   </video>
 </div>
 
-데모 영상에서 확인할 포인트:
-1. 입력 장면에 대한 피드백 생성 흐름
-2. 피드백이 행동 지시 형태로 제시되는 UX
-3. 사용자 촬영 보조 시나리오로의 확장 가능성
-
-## 문제 정의와 동기
-기존 접근은 크게 두 축이었습니다.
-
-| 접근 | 강점 | 한계 |
-|---|---|---|
-| Memorability Prediction | 점수화/비교가 명확 | 사용자 행동 지침 부족 |
-| Image Editing/Generation | 결과물 변화 직접 확인 | 촬영 순간에 바로 적용하기 어려움 |
-
-이 논문이 던지는 실전 질문은 다음입니다.
-
-> "지금 이 장면에서 무엇을 바꾸면 더 기억에 남는 사진이 되는가?"
-
-즉, 사용자에게 필요한 것은 설명이 아니라 **실행 가능한 조언**입니다.
-
-## 제안 방법: MemCoach
-### A. Contrastive Data Generation
-- 동일 장면에서
-- Teacher: 기억도 중심 피드백
-- Student: 중립/일반 피드백
-- 두 출력을 대비시켜 차이를 학습 신호로 사용
-
-### B. Steering Vector Extraction
-- Teacher-Student activation 차이를 통해
-- 기억도 향상 방향을 나타내는 steering vector 도출
-
-### C. Inference-Time Steering
-- 추론 시 student activation을 steering 방향으로 이동
-- 별도 fine-tuning 없이도 더 실용적인 피드백 생성
-
-발표 멘트:
-> "모델을 다시 학습시키지 않고, 내부 표현 조향으로 목적 지향적 피드백을 만든다."
-
-## 벤치마크: MemBench
-논문은 MemFeed 평가를 위해 MemBench를 제안합니다.
-
-- 총 **7.97k rows**
-- train **6.35k** / test **1.63k**
-- 이미지 + 액션 텍스트 + 점수 정보
-
-해석 포인트:
-- 같은 scene 내 상대 비교 구조를 사용해,
-- "더 나은 피드백이 실제로 기억도 개선 방향인가"를 평가할 수 있음
-
-## 결과와 해석
-논문/프로젝트 페이지에서 강조하는 결론:
-- 다수 오픈 MLLM에서 성능 향상
-- zero-shot 대비 개선
-- memorability 연구를 사용자 행위 유도 문제로 확장
-
-요약하면,
-- Before: "이 사진 점수는 얼마인가"
-- After: "다음 샷에서 무엇을 바꾸면 되는가"
+<div class="media-grid">
+  <figure class="media-panel">
+    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/photo_before.jpg" alt="Demo before image" loading="lazy" />
+    <figcaption>Before</figcaption>
+  </figure>
+  <figure class="media-panel">
+    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/teaser/assets/photo_after.jpg" alt="Demo after image" loading="lazy" />
+    <figcaption>After</figcaption>
+  </figure>
+</div>
 
 ## 한계와 토론
-세미나 토론용으로 중요한 지점:
 1. 기억도의 개인차/문화차를 얼마나 포괄하는가
 2. 모델 피드백이 현실 촬영 제약(조명, 공간, 피사체 협조)을 반영하는가
 3. 단기 인상과 장기 기억(며칠~몇 주 후 회상)이 정합적인가
