@@ -270,6 +270,21 @@ table th {
   margin-bottom: 0;
 }
 
+.pseudo-code {
+  border: 1px solid #d7e3f2;
+  background: #f7fbff;
+  border-radius: 10px;
+  padding: 0.8rem 0.9rem;
+  margin: 0.8rem 0 1rem;
+  font-family: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.pseudo-code p {
+  margin: 0.3rem 0;
+}
+
 @media (max-width: 860px) {
   .grid-3 {
     grid-template-columns: 1fr;

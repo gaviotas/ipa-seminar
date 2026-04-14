@@ -176,18 +176,18 @@ $$
 - low-data에서도 적용 가능
 
 ### 4.4 Algorithm Sketch (Pseudocode)
-```text
-Input: scene-grouped images X_i, predictor M, teacher phi_teach, student phi_stud
-1) For each scene i:
-   - pick x_S^i = argmin_x M(x), x_D^i = argmax_x M(x)
-   - generate f_i^+ = phi_teach(x_S^i, x_D^i, p_a)
-   - generate f_i^- = phi_stud(x_S^i, p_m)
-2) Collect student activations h_{+,i}^{(l)}, h_{-,i}^{(l)} and compute
-   r^(l) = (1/N) * Σ_i (h_{+,i}^{(l)} - h_{-,i}^{(l)})
-3) At inference, steer activation:
-   h_tilde^(l) = h^(l) + α * r^(l)
-4) Decode steered student output as final memorability feedback
-```
+<div class="pseudo-code">
+  <p><strong>Input:</strong> scene-grouped images \(X_i\), predictor \(M\), teacher \(\phi_{\text{teach}}\), student \(\phi_{\text{stud}}\)</p>
+  <p>1) For each scene \(i\):</p>
+  <p>&nbsp;&nbsp;- pick \(x_S^i = \arg\min_x M(x)\), \(x_D^i = \arg\max_x M(x)\)</p>
+  <p>&nbsp;&nbsp;- generate \(f_i^+ = \phi_{\text{teach}}(x_S^i, x_D^i, p_a)\)</p>
+  <p>&nbsp;&nbsp;- generate \(f_i^- = \phi_{\text{stud}}(x_S^i, p_m)\)</p>
+  <p>2) Collect student activations \(h_{+,i}^{(l)}, h_{-,i}^{(l)}\) and compute</p>
+  <p>&nbsp;&nbsp;\(r^{(l)} = \frac{1}{N}\sum_i\left(h_{+,i}^{(l)} - h_{-,i}^{(l)}\right)\)</p>
+  <p>3) At inference, steer activation:</p>
+  <p>&nbsp;&nbsp;\(\tilde{h}^{(l)} = h^{(l)} + \alpha r^{(l)}\)</p>
+  <p>4) Decode steered student output as final memorability feedback</p>
+</div>
 
 <figure class="media-panel">
   <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/method.webp" alt="MemCoach method overview" loading="lazy" />
