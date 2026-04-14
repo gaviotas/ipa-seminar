@@ -245,9 +245,42 @@ pre,
 }
 
 .post-content h2 {
-  margin-top: 2.1rem;
-  padding-bottom: 0.35rem;
-  border-bottom: 1px solid var(--line);
+  margin-top: 2.6rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid #cfe0f2;
+  border-left: 6px solid #4b7fb2;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #f3f8ff 0%, #ffffff 88%);
+  box-shadow: 0 6px 16px rgba(17, 33, 56, 0.05);
+}
+
+.post-content h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.65rem;
+  padding-left: 0.55rem;
+  border-left: 3px solid #8fb0d5;
+  color: #17395d;
+}
+
+.post-content hr {
+  border: 0;
+  height: 1px;
+  margin: 2.2rem 0 1.8rem;
+  background: linear-gradient(90deg, rgba(87, 126, 170, 0.05) 0%, rgba(87, 126, 170, 0.5) 50%, rgba(87, 126, 170, 0.05) 100%);
+}
+
+.post-content > p,
+.post-content > ul,
+.post-content > ol {
+  margin-bottom: 0.85rem;
+}
+
+.post-content .table-wrap,
+.post-content .media-panel,
+.post-content .pseudo-code {
+  margin-top: 0.95rem;
+  margin-bottom: 1.15rem;
 }
 
 table {
