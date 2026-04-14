@@ -457,3 +457,63 @@ table tbody tr:nth-child(even):not(.table-group) {
     padding: 0.85rem 0.9rem;
   }
 }
+
+/* Refinement: cleaner, less decorative */
+.hero-card,
+.section-card,
+.info-card,
+.paper-card,
+.media-panel,
+.video-frame,
+.post-content h2 {
+  box-shadow: 0 4px 12px rgba(17, 33, 56, 0.05);
+}
+
+.hero-card::after {
+  display: none;
+}
+
+.section-card:hover,
+.info-card:hover,
+.paper-card:hover,
+.media-panel:hover,
+.btn-primary:hover,
+.btn-secondary:hover,
+.link-chip:hover {
+  transform: none;
+  box-shadow: 0 4px 12px rgba(17, 33, 56, 0.05);
+}
+
+.post-content h2 {
+  background: #f8fbff;
+  border: 1px solid #dbe6f3;
+  border-left: 4px solid #5b88b8;
+}
+
+.post-content h3 {
+  border-left: 2px solid #9cb8d8;
+}
+
+.post-content hr {
+  background: #dbe6f3;
+  margin: 1.9rem 0 1.4rem;
+}
+
+.post-content > ul,
+.post-content > ol {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0.1rem 0 0.1rem 1.25rem;
+}
+
+.post-content > ul > li,
+.post-content > ol > li {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.post-content ul li::marker,
+.post-content ol li::marker {
+  color: #3e6894;
+}
