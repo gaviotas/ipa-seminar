@@ -32,6 +32,22 @@ title: ""
   </article>
 </section>
 
+## Featured Visuals
+<div class="media-grid">
+  <figure class="media-panel">
+    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/teaser.webp" alt="MemCoach teaser figure" loading="lazy" />
+    <figcaption>논문 teaser: 문제와 기여를 한 장으로 요약</figcaption>
+  </figure>
+  <figure class="media-panel">
+    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/method.webp" alt="MemCoach method figure" loading="lazy" />
+    <figcaption>방법 개요: contrastive generation + steering inference</figcaption>
+  </figure>
+</div>
+
+<div class="video-frame">
+  <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" title="MemCoach Demo Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
 ## Quick Access
 - [논문 리뷰 포스트]({{ site.baseurl }}{% post_url 2026-04-14-how-to-take-a-memorable-picture-memcoach %})
 - [5분/10분 발표 노트]({{ '/presentation-notes/' | relative_url }})

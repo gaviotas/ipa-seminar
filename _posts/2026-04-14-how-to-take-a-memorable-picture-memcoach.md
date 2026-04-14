@@ -30,6 +30,33 @@ image: /assets/images/og-memcoach.svg
 2. **MemCoach**: 추가 파인튜닝 없이 activation steering 기반으로 피드백 개선
 3. **MemBench**: 비교 가능한 평가용 벤치마크 공개
 
+## Visual Highlights
+<figure class="media-panel">
+  <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/teaser.webp" alt="MemCoach teaser figure from the paper" loading="lazy" />
+  <figcaption>Figure 1. 논문의 핵심 메시지를 요약한 teaser (출처: MemCoach 공식 리포지토리)</figcaption>
+</figure>
+
+<div class="media-grid">
+  <figure class="media-panel">
+    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/method.webp" alt="MemCoach method overview" loading="lazy" />
+    <figcaption>Figure 2. MemCoach 파이프라인 개요</figcaption>
+  </figure>
+  <figure class="media-panel">
+    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/table-results.webp" alt="MemCoach quantitative table results" loading="lazy" />
+    <figcaption>Figure 3. 정량 결과 테이블 (주요 지표 비교)</figcaption>
+  </figure>
+</div>
+
+## Project Demo Video
+<div class="video-frame">
+  <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" title="MemCoach Project Demo Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+데모 영상에서 확인할 포인트:
+1. 입력 장면에 대한 피드백 생성 흐름
+2. 피드백이 행동 지시 형태로 제시되는 UX
+3. 사용자 촬영 보조 시나리오로의 확장 가능성
+
 ## 문제 정의와 동기
 기존 접근은 크게 두 축이었습니다.
 
