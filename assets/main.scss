@@ -334,6 +334,48 @@ pre,
   margin-bottom: 0.85rem;
 }
 
+.post-content ul,
+.post-content ol {
+  margin: 0.7rem 0 1rem 1.05rem;
+  padding: 0.1rem 0 0.1rem 0.55rem;
+}
+
+.post-content ul li,
+.post-content ol li {
+  margin: 0.38rem 0;
+  padding-left: 0.22rem;
+}
+
+.post-content ul li::marker {
+  color: #2e6aa5;
+}
+
+.post-content ol li::marker {
+  color: #1b4f82;
+  font-weight: 700;
+}
+
+.post-content > ul,
+.post-content > ol {
+  border: 1px solid #d8e5f3;
+  background: linear-gradient(180deg, #fbfdff 0%, #f4f9ff 100%);
+  border-radius: 12px;
+  padding: 0.7rem 0.9rem 0.7rem 1.35rem;
+  box-shadow: 0 6px 14px rgba(17, 33, 56, 0.05);
+}
+
+.post-content > ul > li,
+.post-content > ol > li {
+  border-bottom: 1px dashed #d6e2f1;
+  padding-bottom: 0.35rem;
+}
+
+.post-content > ul > li:last-child,
+.post-content > ol > li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
 .post-content .table-wrap,
 .post-content .media-panel,
 .post-content .pseudo-code {
