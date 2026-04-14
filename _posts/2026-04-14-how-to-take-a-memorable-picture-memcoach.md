@@ -11,6 +11,29 @@ image: /assets/images/og-memcoach.svg
 
 > 목표: 이 포스트만으로 세미나 청중이 논문 핵심 아이디어, 알고리즘, 실험 결과를 이해할 수 있게 구성
 
+## Paper At A Glance
+- **Title**: *How to Take a Memorable Picture? Empowering Users with Actionable Feedback*
+- **Venue**: CVPR 2026
+- **arXiv**: 2602.21877 (v2, 2026-03-19)
+- **Project**: [MemCoach](https://laitifranz.github.io/MemCoach/)
+
+**Authors**
+- Francesco Laiti<sup>1,2,3</sup>
+- Davide Talon<sup>4</sup>
+- Jacopo Staiano<sup>1</sup>
+- Elisa Ricci<sup>1,4</sup>
+
+**Affiliations**
+- <sup>1</sup> University of Trento
+- <sup>2</sup> University of Pisa
+- <sup>3</sup> Travelbrain srl
+- <sup>4</sup> Fondazione Bruno Kessler
+
+## Project Teaser (Camera Frame)
+<div class="video-frame">
+  <iframe src="https://laitifranz.github.io/MemCoach/static/images/teaser/teaser_animation.html" title="MemCoach teaser animation with camera frame" loading="lazy" allowfullscreen></iframe>
+</div>
+
 ## Executive Summary
 이 논문은 image memorability를 "점수 예측"에서 "사용자 행동 지시" 문제로 전환합니다.
 
