@@ -93,14 +93,14 @@ image: /assets/images/og-memcoach.svg
       </tr>
     </thead>
     <tbody>
-      <tr><td>x_S</td><td>Source image (현재 사용자 입력 이미지)</td></tr>
-      <tr><td>x_D</td><td>Destination image (개선 목표 이미지)</td></tr>
-      <tr><td>M(·)</td><td>Memorability predictor</td></tr>
-      <tr><td>m_S, m_D</td><td>각 이미지의 memorability score</td></tr>
-      <tr><td>a</td><td>생성할 actionable feedback 텍스트</td></tr>
-      <tr><td>ϕ_teach, ϕ_stud</td><td>Teacher / Student MLLM</td></tr>
-      <tr><td>r^(l)</td><td>Layer l 의 memorability steering vector</td></tr>
-      <tr><td>α</td><td>Steering strength coefficient</td></tr>
+      <tr><td>\(x_S\)</td><td>Source image (현재 사용자 입력 이미지)</td></tr>
+      <tr><td>\(x_D\)</td><td>Destination image (개선 목표 이미지)</td></tr>
+      <tr><td>\(M(\cdot)\)</td><td>Memorability predictor</td></tr>
+      <tr><td>\(m_S, m_D\)</td><td>각 이미지의 memorability score</td></tr>
+      <tr><td>\(a\)</td><td>생성할 actionable feedback 텍스트</td></tr>
+      <tr><td>\(\phi_{\mathrm{teach}}, \phi_{\mathrm{stud}}\)</td><td>Teacher / Student MLLM</td></tr>
+      <tr><td>\(r^{(l)}\)</td><td>Layer \(l\) 의 memorability steering vector</td></tr>
+      <tr><td>\(\alpha\)</td><td>Steering strength coefficient</td></tr>
     </tbody>
   </table>
 </div>
