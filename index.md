@@ -4,11 +4,12 @@ title: ""
 ---
 
 <section class="hero-card">
-  <p class="eyebrow">IPA Seminar Project</p>
+  <p class="eyebrow">IPA Seminar · Technical Review</p>
   <h1>How to Take a Memorable Picture?</h1>
   <p class="subtitle">Empowering Users with Actionable Feedback (CVPR 2026)</p>
   <p>
-    MemCoach 프로젝트 페이지 흐름을 따라, 논문 핵심 논리와 시각 자료를 발표 친화적으로 재구성했습니다.
+    이 페이지는 논문 비전문 청중도 따라올 수 있도록 문제 정의를 명확히 설명하면서,
+    AI 박사 청중을 위해 수식/평가설계/ablation까지 포함한 기술 세미나 구조로 구성했습니다.
   </p>
   <p class="hero-actions">
     <a class="btn-primary" href="{{ site.baseurl }}{% post_url 2026-04-14-how-to-take-a-memorable-picture-memcoach %}">논문 포스트 보기</a>
@@ -23,76 +24,32 @@ title: ""
 </section>
 
 <section class="section-card">
-  <h2>Key Contributions</h2>
-  <div class="grid-3">
-    <article class="info-card">
-      <h3>MemFeed</h3>
-      <p>기억도 향상을 위한 actionable feedback 생성 태스크를 명시적으로 정의.</p>
-    </article>
-    <article class="info-card">
-      <h3>MemCoach</h3>
-      <p>Training-free teacher-student steering으로 실용적 피드백 생성.</p>
-    </article>
-    <article class="info-card">
-      <h3>MemBench</h3>
-      <p>비교 가능한 평가를 위한 벤치마크 데이터셋과 파이프라인 공개.</p>
-    </article>
-  </div>
+  <h2>Seminar Flow</h2>
+  <ol>
+    <li>문제 전환: prediction에서 actionable feedback으로</li>
+    <li>MemFeed 정식화: `m_D > m_S`를 만족하는 피드백 생성</li>
+    <li>MemCoach 알고리즘: contrasting pairs, steering vector, inference-time shift</li>
+    <li>MemBench 평가: IR/RM/PPL의 의미와 해석</li>
+    <li>ablation과 일반화: data efficiency, alpha saturation, cross-backbone behavior</li>
+    <li>한계와 연구 방향: evaluator bias, personalization, human study</li>
+  </ol>
 </section>
 
 <section class="section-card">
-  <h2>Abstract Snapshot</h2>
-  <blockquote>
-    핵심 전환: “얼마나 기억에 남는가를 맞추는 문제”에서 “더 기억에 남도록 어떻게 찍을지 안내하는 문제”로 이동.
-  </blockquote>
-</section>
-
-<section class="section-card">
-  <h2>Method</h2>
-  <figure class="media-panel">
-    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/method.webp" alt="MemCoach method overview" loading="lazy" />
-    <figcaption>Teacher-Student contrastive generation과 activation steering을 결합한 MemCoach 파이프라인.</figcaption>
-  </figure>
-</section>
-
-<section class="section-card">
-  <h2>MemBench</h2>
-  <div class="media-grid">
-    <figure class="media-panel">
-      <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/data-pipeline.webp" alt="MemBench data pipeline" loading="lazy" />
-      <figcaption>MemBench 생성 및 평가 파이프라인.</figcaption>
-    </figure>
-    <figure class="media-panel">
-      <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/statistics.webp" alt="MemBench statistics" loading="lazy" />
-      <figcaption>MemBench 통계 및 분포 요약.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<section class="section-card">
-  <h2>Results</h2>
-  <div class="media-grid">
-    <figure class="media-panel">
-      <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/qualitatives-feedback.webp" alt="MemCoach qualitative results" loading="lazy" />
-      <figcaption>Qualitative feedback 예시.</figcaption>
-    </figure>
-    <figure class="media-panel">
-      <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/table-results.webp" alt="MemCoach quantitative table" loading="lazy" />
-      <figcaption>Quantitative 결과 비교 테이블.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<section class="section-card">
-  <h2>Interpretation for Seminar</h2>
+  <h2>Key Technical Points</h2>
   <ul>
-    <li>이 논문은 점수 예측 성능 경쟁보다, 사용자 행동으로 연결되는 피드백 설계에 기여합니다.</li>
-    <li>Training-free steering은 실험 반복 비용을 줄여 연구/제품 양쪽에서 실용성이 높습니다.</li>
-    <li>평가도 텍스트 품질만 보지 않고, 편집 기반 개선 효과까지 연결해 보려는 점이 중요합니다.</li>
+    <li>Steering vector: r^(l) = (1/N) * Σ_i (h_{+,i}^(l) - h_{-,i}^(l))</li>
+    <li>Inference steering: h_tilde^(l) = h^(l) + α * r^(l)</li>
+    <li>논문 기본 세팅: InternVL3.5-8B, l=12, α=55</li>
   </ul>
 </section>
 
-## Quick Access
-- [논문 리뷰 포스트]({{ site.baseurl }}{% post_url 2026-04-14-how-to-take-a-memorable-picture-memcoach %})
-- [5분/10분 발표 노트]({{ '/presentation-notes/' | relative_url }})
-- [참고 링크 모음]({{ '/resources/' | relative_url }})
+<section class="section-card">
+  <h2>Read First</h2>
+  <p>
+    그림 위주 요약이 아니라, 방법론과 실험 설계를 중심으로 재작성한 기술 리뷰는 아래 포스트에서 확인할 수 있습니다.
+  </p>
+  <p>
+    <a class="btn-primary" href="{{ site.baseurl }}{% post_url 2026-04-14-how-to-take-a-memorable-picture-memcoach %}">Technical Deep Dive 열기</a>
+  </p>
+</section>

@@ -5,158 +5,155 @@ subtitle: "Empowering Users with Actionable Feedback (CVPR 2026)"
 date: 2026-04-14 20:00:00 +0900
 categories: [paper-review, computer-vision]
 tags: [memorability, mllm, cvpr2026, memcoach, membench]
-description: "Memorability 예측을 넘어, 촬영 시점에 바로 적용 가능한 actionable feedback 생성 문제를 다룬 MemCoach 논문 리뷰"
+description: "Memorability Feedback(MemFeed)와 MemCoach의 기술적 핵심(정식화, steering, 평가 프로토콜)을 다루는 세미나용 리뷰"
 image: /assets/images/og-memcoach.svg
 ---
 
-> 발표용 핵심 한 줄: 이 논문은 "기억도 점수 예측"을 "기억도 향상을 위한 행동 지시"로 확장한다.
+> 대상 청중: AI/CV 전공 박사 연구자
 
-## Table of Contents
-- [Key Contributions](#key-contributions)
-- [Abstract](#abstract)
-- [Problem Setting](#problem-setting)
-- [Method](#method)
-- [MemBench](#membench)
-- [Evaluation Protocol](#evaluation-protocol)
-- [Qualitative Results](#qualitative-results)
-- [Quantitative Results](#quantitative-results)
-- [Critical Discussion](#critical-discussion)
-- [한계와 토론](#한계와-토론)
-- [세미나 Q&A](#세미나-qa)
-- [References](#references)
+## TL;DR
+이 논문은 memorability 연구를 **예측(regression)**에서 **행동 유도(actionable feedback)**로 전환합니다.
+핵심은 training-free activation steering으로 MLLM의 피드백 생성 분포를 이동시키는 점입니다.
 
-## Key Contributions
-1. **MemFeed**: 기억도 향상을 위한 피드백 생성 태스크 정의
-2. **MemCoach**: 추가 파인튜닝 없이 activation steering 기반으로 피드백 개선
-3. **MemBench**: 비교 가능한 평가용 벤치마크 공개
+## 1. Problem Setting (MemFeed)
+입력 이미지 `x_S`에 대해, 자연어 피드백 `a`를 생성하여 사용자가 촬영/구도/표정을 바꿨을 때 더 높은 기억도 이미지 `x_D`로 이동하도록 하는 문제입니다.
 
-<figure class="media-panel">
-  <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/teaser.webp" alt="MemCoach teaser figure" loading="lazy" />
-  <figcaption>Teaser. 문제 정의와 기여를 한 장으로 요약한 핵심 도판.</figcaption>
-</figure>
+논문의 정식화(Section 3.1):
+- `m_S = M(x_S)`, `m_D = M(x_D)`
+- 목표: `m_D > m_S`
+- 여기서 `M`은 memorability predictor
 
-## Abstract
-기존 memorability 연구는 이미지가 얼마나 기억에 남는지 **예측**하는 데 집중해 왔습니다.
-이 논문은 촬영 시점에 사용자가 당장 적용할 수 있는 **actionable feedback** 생성으로 문제를 확장합니다.
+이 문제는 score prediction과 다릅니다.
+- prediction: 현재 상태 측정
+- MemFeed: 개선 방향 제시
 
-핵심 메시지:
-- Before: "이 사진 점수는 얼마인가"
-- After: "다음 샷에서 무엇을 바꾸면 되는가"
+## 2. Why Zero-shot MLLM Is Not Enough
+논문은 먼저 MLLM의 memorability 이해 한계를 보여줍니다.
+- LaMem 기준 yes/no memorability 질의에서 Spearman 상관이 거의 0 수준
+- zero-shot feedback은 editing baseline 대비 IR 개선이 작음
 
-## Problem Setting
-논문의 태스크는 입력 이미지 \(I\)를 받아, 사람이 바로 실행 가능한 피드백 텍스트 \(f\)를 생성하는 문제로 볼 수 있습니다.
+즉, 일반 MLLM의 “시각-언어 능력”만으로는 memorability-aware guidance를 안정적으로 만들기 어렵다는 전제가 성립합니다.
 
-요구 조건은 3가지입니다.
-1. **Actionability**: 구체적으로 무엇을 바꿔야 하는지 지시할 것
-2. **Human interpretability**: 사진 비전문가도 이해 가능한 언어일 것
-3. **Memorability-oriented**: 미적 향상 일반론이 아니라, 기억도 향상에 초점을 둘 것
+## 3. MemCoach: Technical Core
+MemCoach는 3단계 파이프라인입니다.
 
-핵심은 점수 예측 정확도 자체보다, 피드백이 실제 수정 행동으로 이어질 수 있는지에 있습니다.
+### 3.1 Contrasting Data Generation
+씬 `i`의 이미지 집합 `X_i`에서
+- `x_S^i`: least memorable image
+- `x_D^i`: most memorable image
 
-## Method
-MemCoach는 teacher-student 대비 생성과 activation steering을 결합합니다.
+Teacher 모델 `ϕ_teach`로 privileged feedback 생성:
+- `f_i^+ = ϕ_teach(x_S^i, x_D^i, p_a)`
 
-- Stage A: Contrastive Data Generation
-- Stage B: Steering Vector Extraction
-- Stage C: Inference-Time Steering
+Student 모델 `ϕ_stud`의 neutral feedback 생성:
+- `f_i^- = ϕ_stud(x_S^i, p_m)`
+
+대조쌍:
+- `F^+ = {f_i^+}_i`
+- `F^- = {f_i^-}_i`
+
+### 3.2 Steering Vector Extraction
+같은 `(x_S^i, p_m)` 조건에서 assistant 답변만 `f_i^+` vs `f_i^-`로 바꿔 student activation을 수집합니다.
+
+레이어 `l`에서 steering vector:
+
+```text
+r^(l) = (1/N) * Σ_i ( h_{+,i}^(l) - h_{-,i}^(l) )
+```
+
+핵심은 sample-wise difference를 먼저 계산하고 평균내는 구조입니다.
+논문 ablation에서도 이 방식이 `diff(mean)`보다 좋다고 보고합니다.
+
+### 3.3 Inference-Time Steering
+추론 시 student activation `h^(l)`를 아래처럼 이동:
+
+```text
+h_tilde^(l) = h^(l) + α * r^(l)
+```
+
+- `α`: steering strength
+- 논문 기본값: `l=12`, `α=55` (InternVL3.5-8B 기준)
+
+장점:
+- training-free
+- backbone-agnostic (activation 접근 가능하면 적용 가능)
 
 <figure class="media-panel">
   <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/method.webp" alt="MemCoach method overview" loading="lazy" />
-  <figcaption>Method overview. 학습 재시작 없이 내부 표현 조향으로 피드백 품질을 개선.</figcaption>
+  <figcaption>MemCoach 방법 개요. Source: official project/repo figure.</figcaption>
 </figure>
 
-방법론 해석 포인트:
-- **Teacher 신호의 역할**: “더 기억에 남는 방향”으로 정렬된 표현을 제공
-- **Student의 역할**: 일반 피드백 생성의 기본 언어 능력 유지
-- **Steering의 장점**: 추가 학습 비용 없이, 추론 단계에서 목적 지향성을 주입
+## 4. MemBench: Dataset and Evaluation Design
+MemBench는 PPR10K 기반으로 구축됩니다.
+- 약 10K 이미지
+- 1,570 scenes
+- scene당 평균 6.5 이미지
 
-발표에서 강조할 문장:
-> “이 방법은 모델 파라미터를 다시 학습하기보다, 활성값의 방향을 조정해 목적 함수의 성격을 바꾼다.”
+생성 파이프라인:
+1. scene grouping
+2. memorability regression (`M`)
+3. scene 내부 ranking
+4. low→high pair로 action feedback 생성
 
-## MemBench
-MemFeed 평가를 위해 제안된 벤치마크입니다.
+### 4.1 Metrics
+논문은 평가를 2축으로 설계합니다.
 
-- 총 **7.97k rows**
-- train **6.35k** / test **1.63k**
-- 이미지 + 액션 텍스트 + 점수 정보
+1. Editing-based effectiveness
+- 편집 모델 `e(x_S, a)`로 feedback 적용 결과 `x_hat_D` 생성
+- **IR (Improvement Ratio)**: `m_D >= m_S` 비율
+- **RM (Relative Memorability)**: `(m_D - m_S) / m_S`
 
-<div class="media-grid">
-  <figure class="media-panel">
-    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/data-pipeline.webp" alt="MemBench data pipeline" loading="lazy" />
-    <figcaption>Data generation 및 evaluation 파이프라인.</figcaption>
-  </figure>
-  <figure class="media-panel">
-    <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/statistics.webp" alt="MemBench statistics" loading="lazy" />
-    <figcaption>MemBench 통계 및 데이터 분포 요약.</figcaption>
-  </figure>
-</div>
+2. Feedback likelihood
+- ground-truth memorability-aware feedback에 대한 perplexity
 
-## Evaluation Protocol
-프로젝트 설명 기준으로, 평가는 단일 지표가 아니라 복합적으로 구성됩니다.
+이 설계는 “문장이 자연스러운가”와 “실제로 개선되는가”를 동시에 보려는 점이 강점입니다.
 
-1. **Editing-based memorability improvement**
-피드백을 바탕으로 생성/편집된 결과가 실제로 기억도 개선 방향을 보이는지 측정
-2. **Text quality proxy (e.g., perplexity-related analysis)**
-피드백 텍스트의 품질과 자연스러움을 함께 점검
-
-의미:
-- 단순히 “문장이 그럴듯한가”가 아니라,
-- “행동 가능한 조언이 실제 개선으로 연결되는가”를 보려는 설계입니다.
-
-## Qualitative Results
 <figure class="media-panel">
-  <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/qualitatives-feedback.webp" alt="MemCoach qualitative feedback results" loading="lazy" />
-  <figcaption>피드백 품질의 질적 비교: 사용자 행동 지시의 구체성에 주목.</figcaption>
+  <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/data-pipeline.webp" alt="MemBench pipeline" loading="lazy" />
+  <figcaption>MemBench 구축 및 평가 파이프라인. Source: official project/repo figure.</figcaption>
 </figure>
 
-읽는 포인트:
-- 제안형 문장(“무엇을 강조/이동/정리”)이 구체적인지
-- 장면 설명에서 멈추지 않고 수정 지시로 이어지는지
-- 촬영 맥락에서 즉시 실행 가능한지
+## 5. Quantitative Results (Paper)
+논문 Table 2(InternVL 기반 MemCoach) 핵심 수치:
 
-## Quantitative Results
-<figure class="media-panel">
-  <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/table-results.webp" alt="MemCoach quantitative result table" loading="lazy" />
-  <figcaption>여러 오픈 MLLM 설정에서의 정량 비교 결과.</figcaption>
-</figure>
+| Model | IR ↑ | RM% ↑ | PPL ↓ |
+|---|---:|---:|---:|
+| Zero-shot InternVL3.5 | 0.73 | 5.47 | 5.49 |
+| Zero-shot GPT-5 mini | 0.75 | 7.03 | n.d. |
+| MemCoach (InternVL) | **0.80** | **7.21** | **4.99** |
 
-정량 결과를 발표에서 해석할 때는 아래 두 가지를 분리해 설명하는 것이 좋습니다.
-1. **모델 비교 관점**: 어떤 MLLM 백본에서도 개선이 유지되는가
-2. **과제 적합성 관점**: 점수 개선이 실제 actionable feedback 품질과 함께 움직이는가
+해석:
+- zero-shot 대비 IR/RM/PPL 동시 개선
+- aesthetics-specialized MLLM들 대비도 경쟁력 있음
 
-## Critical Discussion
-이 논문이 중요한 이유는 성능 숫자 자체보다, 문제 설정 전환에 있습니다.
+Table 3 일반화 결과도 중요합니다.
+- LLAVA, IDEFICS, QWEN, INTERNVL 백본 전반에서 IR 개선 보고
+- 즉, 특정 백본 특화 기법이 아니라 activation-space steering의 일반성이 메시지
 
-- 기존: memorability를 예측/편집의 대상로 취급
-- 제안: memorability를 “사용자에게 가르칠 수 있는 대상”으로 재정의
+## 6. Ablation Insights
+논문에서 세미나 토론에 유용한 포인트:
+- **Data efficiency**: low-data에서도 LoRA fine-tune 대비 유리한 구간 보고
+- **Steering coefficient α**: 증가 초기에 성능 상승, 이후 포화
+- **Teacher choice**: teacher를 바꾸면 성능 변화가 생기지만 steering 이득 자체는 유지
 
-이 전환은 HCI 관점에서도 의미가 큽니다.
-- 피드백 시스템이 단순 평가자에서 코치로 바뀜
-- 캡처 시점 의사결정(구도, 표정, 피사체 배치)에 직접 개입 가능
-- 장기적으로는 개인화 촬영 어시스턴트로 확장 가능
+## 7. Critical Discussion
+강점:
+1. 문제 정의 자체가 명확하고 실사용 맥락과 정합적
+2. training-free로 구현 부담이 낮음
+3. 평가를 텍스트 품질 + 편집 기반 효과로 분리해 설계
 
-## 한계와 토론
-1. 기억도의 개인차/문화차를 얼마나 포괄하는가
-2. 모델 피드백이 현실 촬영 제약(조명, 공간, 피사체 협조)을 반영하는가
-3. 단기 인상과 장기 기억(며칠~몇 주 후 회상)이 정합적인가
-4. 액션형 피드백의 일관성/안전성 검증이 충분한가
+한계:
+1. `M` predictor와 `e` editor에 대한 의존성(평가 파이프라인 편향 가능)
+2. memorability의 개인/문화 편차를 평균화해 다룸
+3. “distinctiveness”를 과도하게 정규화하는 failure mode 가능
 
-## 세미나 Q&A
-**Q1. Aesthetic feedback과의 차이는?**  
-A. 미적 선호와 기억도는 겹치지만 동일하지 않습니다. 본 논문은 memorability 자체를 직접 최적화 대상으로 둡니다.
-
-**Q2. 왜 training-free가 의미 있나?**  
-A. 추가 학습 비용 없이 기존 모델에 빠르게 적용 가능해, 제품화와 실험 반복의 진입장벽을 낮춥니다.
-
-**Q3. 실제 서비스 적용 가능성은?**  
-A. 프로젝트는 모바일 캡처-피드백 루프를 시사하며, 카메라 코치/촬영 보조 UX로 확장 여지가 큽니다.
+## 8. Seminar Takeaways
+1. MemFeed는 memorability 연구의 objective를 바꾼다.
+2. MemCoach의 본질은 parameter update가 아니라 latent steering이다.
+3. 향후 확장은 personalization(사용자별 기억 특성)과 closed-loop human study가 핵심이다.
 
 ## References
-- Laiti et al., *How to Take a Memorable Picture? Empowering Users with Actionable Feedback*, CVPR 2026 / arXiv 2602.21877  
-  [https://arxiv.org/abs/2602.21877](https://arxiv.org/abs/2602.21877)
-- Project page (MemCoach)  
-  [https://laitifranz.github.io/MemCoach/](https://laitifranz.github.io/MemCoach/)
-- Code repository  
-  [https://github.com/laitifranz/MemCoach](https://github.com/laitifranz/MemCoach)
-- MemBench dataset card  
-  [https://huggingface.co/datasets/laitifranz/MemBench](https://huggingface.co/datasets/laitifranz/MemBench)
+- Paper (arXiv): [https://arxiv.org/abs/2602.21877](https://arxiv.org/abs/2602.21877)
+- Project page: [https://laitifranz.github.io/MemCoach/](https://laitifranz.github.io/MemCoach/)
+- Code: [https://github.com/laitifranz/MemCoach](https://github.com/laitifranz/MemCoach)
+- MemBench dataset: [https://huggingface.co/datasets/laitifranz/MemBench](https://huggingface.co/datasets/laitifranz/MemBench)
