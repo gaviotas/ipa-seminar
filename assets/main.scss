@@ -241,6 +241,18 @@ table th {
   background: #f1f6fc;
 }
 
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0.7rem 0 1rem;
+}
+
+.table-wrap table {
+  min-width: 640px;
+  margin-bottom: 0;
+}
+
 @media (max-width: 860px) {
   .grid-3 {
     grid-template-columns: 1fr;

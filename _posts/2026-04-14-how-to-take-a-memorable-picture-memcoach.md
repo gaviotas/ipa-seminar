@@ -172,33 +172,58 @@ MemBench는 PPR10K 기반으로 구축된 memorability-feedback 벤치마크입�
 아래 표는 논문 reported 수치를 그대로 요약한 것입니다.
 
 ### 6.1 Table 2 Summary (MemFeed Benchmarks)
-| Family | Model | IR ↑ | RM% ↑ | PPL ↓ |
-|---|---|---:|---:|---:|
-| Editing baseline | Empty feedback | 0.68 | 3.72 | n.d. |
-| Teacher oracle | LLAVA-OV | 0.74 | 5.93 | 5.73 |
-| Teacher oracle | IDEFICS3 | 0.80 | 9.84 | 29.21 |
-| Teacher oracle | QWEN2.5VL | 0.83 | 10.16 | 2.34 |
-| Teacher oracle | INTERNVL3.5 | 0.85 | 11.92 | 2.40 |
-| Aesthetic specialized | AESEXPERT | 0.73 | 6.67 | 5.97 |
-| Aesthetic specialized | Q-INSTRUCT | 0.73 | 5.31 | 5.36 |
-| Zero-shot | GPT-5 mini | 0.75 | 7.03 | n.d. |
-| Zero-shot | LLAVA-OV | 0.70 | 5.87 | 7.58 |
-| Zero-shot | IDEFICS3 | 0.73 | 6.64 | 20.19 |
-| Zero-shot | QWEN2.5VL | 0.68 | 4.26 | 10.23 |
-| Zero-shot | INTERNVL3.5 | 0.73 | 5.47 | 5.49 |
-| **Ours** | **MemCoach (InternVL)** | **0.80** | **7.21** | **4.99** |
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Family</th>
+        <th>Model</th>
+        <th>IR ↑</th>
+        <th>RM% ↑</th>
+        <th>PPL ↓</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Editing baseline</td><td>Empty feedback</td><td>0.68</td><td>3.72</td><td>n.d.</td></tr>
+      <tr><td>Teacher oracle</td><td>LLAVA-OV</td><td>0.74</td><td>5.93</td><td>5.73</td></tr>
+      <tr><td>Teacher oracle</td><td>IDEFICS3</td><td>0.80</td><td>9.84</td><td>29.21</td></tr>
+      <tr><td>Teacher oracle</td><td>QWEN2.5VL</td><td>0.83</td><td>10.16</td><td>2.34</td></tr>
+      <tr><td>Teacher oracle</td><td>INTERNVL3.5</td><td>0.85</td><td>11.92</td><td>2.40</td></tr>
+      <tr><td>Aesthetic specialized</td><td>AESEXPERT</td><td>0.73</td><td>6.67</td><td>5.97</td></tr>
+      <tr><td>Aesthetic specialized</td><td>Q-INSTRUCT</td><td>0.73</td><td>5.31</td><td>5.36</td></tr>
+      <tr><td>Zero-shot</td><td>GPT-5 mini</td><td>0.75</td><td>7.03</td><td>n.d.</td></tr>
+      <tr><td>Zero-shot</td><td>LLAVA-OV</td><td>0.70</td><td>5.87</td><td>7.58</td></tr>
+      <tr><td>Zero-shot</td><td>IDEFICS3</td><td>0.73</td><td>6.64</td><td>20.19</td></tr>
+      <tr><td>Zero-shot</td><td>QWEN2.5VL</td><td>0.68</td><td>4.26</td><td>10.23</td></tr>
+      <tr><td>Zero-shot</td><td>INTERNVL3.5</td><td>0.73</td><td>5.47</td><td>5.49</td></tr>
+      <tr><td><strong>Ours</strong></td><td><strong>MemCoach (InternVL)</strong></td><td><strong>0.80</strong></td><td><strong>7.21</strong></td><td><strong>4.99</strong></td></tr>
+    </tbody>
+  </table>
+</div>
 
 포인트:
 - InternVL zero-shot→MemCoach에서 IR/RM/PPL 동시 개선
 - training-free임에도 경쟁력 있는 수치 달성
 
 ### 6.2 Table 3 Summary (Cross-backbone Generalization)
-| Backbone | Baseline IR | MemCoach IR | ΔIR |
-|---|---:|---:|---:|
-| LLAVA-OV | 0.70 | 0.73 | +4.29% |
-| IDEFICS3 | 0.73 | 0.75 | +2.74% |
-| QWEN2.5VL | 0.68 | 0.74 | +8.82% |
-| INTERNVL3.5 | 0.73 | 0.80 | +9.59% |
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Backbone</th>
+        <th>Baseline IR</th>
+        <th>MemCoach IR</th>
+        <th>ΔIR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>LLAVA-OV</td><td>0.70</td><td>0.73</td><td>+4.29%</td></tr>
+      <tr><td>IDEFICS3</td><td>0.73</td><td>0.75</td><td>+2.74%</td></tr>
+      <tr><td>QWEN2.5VL</td><td>0.68</td><td>0.74</td><td>+8.82%</td></tr>
+      <tr><td>INTERNVL3.5</td><td>0.73</td><td>0.80</td><td>+9.59%</td></tr>
+    </tbody>
+  </table>
+</div>
 
 포인트:
 - 특정 모델 트릭이 아니라 steering 방향의 일반성 시사
