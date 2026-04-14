@@ -1,6 +1,7 @@
 ---
 ---
 
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
 @import "minima";
 
 :root {
@@ -17,6 +18,9 @@
 body {
   background: linear-gradient(180deg, #f5f9ff 0%, #f8fbff 45%, #ffffff 100%);
   color: var(--ink);
+  font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  line-height: 1.72;
+  letter-spacing: -0.003em;
 }
 
 .site-header {
@@ -33,10 +37,17 @@ h1,
 h2,
 h3 {
   letter-spacing: -0.02em;
+  line-height: 1.32;
+  font-weight: 700;
 }
 
 .wrapper {
   max-width: 980px;
+}
+
+p,
+li {
+  font-size: 1.03rem;
 }
 
 .hero-card {
@@ -214,6 +225,12 @@ h3 {
   border: 0;
   object-fit: cover;
   background: #000;
+}
+
+code,
+pre,
+.highlight {
+  font-family: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
 }
 
 .muted {
