@@ -5,55 +5,99 @@ subtitle: "Empowering Users with Actionable Feedback (CVPR 2026)"
 date: 2026-04-14 20:00:00 +0900
 categories: [paper-review, computer-vision]
 tags: [memorability, mllm, cvpr2026, memcoach, membench]
-description: "Memorability Feedback(MemFeed)와 MemCoach의 기술적 핵심(정식화, steering, 평가 프로토콜)을 다루는 세미나용 리뷰"
+description: "논문 원문 없이도 세미나 전달이 가능하도록 MemFeed 정식화, MemCoach 알고리즘, 실험 설계와 결과를 통합 정리한 기술 리뷰"
 image: /assets/images/og-memcoach.svg
 ---
 
-> 대상 청중: AI/CV 전공 박사 연구자
+> 목표: 이 포스트만으로 세미나 청중이 논문 핵심 아이디어, 알고리즘, 실험 결과를 이해할 수 있게 구성
 
-## TL;DR
-이 논문은 memorability 연구를 **예측(regression)**에서 **행동 유도(actionable feedback)**로 전환합니다.
-핵심은 training-free activation steering으로 MLLM의 피드백 생성 분포를 이동시키는 점입니다.
+## Executive Summary
+이 논문은 image memorability를 "점수 예측"에서 "사용자 행동 지시" 문제로 전환합니다.
 
-## 1. Problem Setting (MemFeed)
-입력 이미지 `x_S`에 대해, 자연어 피드백 `a`를 생성하여 사용자가 촬영/구도/표정을 바꿨을 때 더 높은 기억도 이미지 `x_D`로 이동하도록 하는 문제입니다.
+핵심 제안:
+1. **MemFeed**: memorability 개선을 위한 actionable feedback 생성 문제 정의
+2. **MemCoach**: training-free activation steering으로 MLLM 피드백 분포 이동
+3. **MemBench**: 데이터셋 + 평가 프로토콜(IR/RM/PPL) 제안
 
+핵심 메시지:
+- 기존 질문: "이 사진이 얼마나 기억에 남는가?"
+- 새로운 질문: "더 기억에 남게 만들려면 무엇을 바꿔야 하는가?"
+
+---
+
+## 1) Background and Motivation
+기존 memorability 연구는 크게 두 축이었습니다.
+- **Prediction**: 이미지에서 scalar memorability score 회귀
+- **Editing**: 이미지 자체를 수정해 memorability 증가 유도
+
+문제:
+- prediction은 actionable하지 않음
+- editing은 사용자의 촬영 의사결정 과정을 설명하지 못함
+
+논문은 capture-time support 관점에서 문제를 재정의합니다.
+즉, 사람에게 "무엇을 바꾸라"고 말할 수 있는 모델이 필요합니다.
+
+---
+
+## 2) Task Definition: Memorability Feedback (MemFeed)
 논문의 정식화(Section 3.1):
-- `m_S = M(x_S)`, `m_D = M(x_D)`
-- 목표: `m_D > m_S`
-- 여기서 `M`은 memorability predictor
+- source image `x_S`
+- destination image `x_D`
+- memorability predictor `M(·)`
+- `m_S = M(x_S), m_D = M(x_D)`
 
-이 문제는 score prediction과 다릅니다.
-- prediction: 현재 상태 측정
-- MemFeed: 개선 방향 제시
+목표:
+- 피드백 `a`를 생성해서 사용자 수정 후 `m_D > m_S`를 만족하도록 유도
 
-## 2. Why Zero-shot MLLM Is Not Enough
-논문은 먼저 MLLM의 memorability 이해 한계를 보여줍니다.
-- LaMem 기준 yes/no memorability 질의에서 Spearman 상관이 거의 0 수준
-- zero-shot feedback은 editing baseline 대비 IR 개선이 작음
+요구 조건:
+1. **Actionable**: 실행 가능한 행동 단위 지시
+2. **Interpretable**: 사람에게 읽히는 자연어
+3. **Memorability-oriented**: aesthetic 일반론이 아니라 기억도 향상 중심
 
-즉, 일반 MLLM의 “시각-언어 능력”만으로는 memorability-aware guidance를 안정적으로 만들기 어렵다는 전제가 성립합니다.
+---
 
-## 3. MemCoach: Technical Core
-MemCoach는 3단계 파이프라인입니다.
+## 3) Why Baseline MLLMs Fail (Paper Evidence)
+논문은 먼저 zero-shot MLLM 한계를 보여줍니다.
 
-### 3.1 Contrasting Data Generation
-씬 `i`의 이미지 집합 `X_i`에서
-- `x_S^i`: least memorable image
-- `x_D^i`: most memorable image
+- LaMem yes/no 질의 기반 memorability 판별에서 Spearman이 거의 0 수준
+  - QWEN2.5VL: -0.06
+  - INTERNVL3.5: -0.01
+  - IDEFICS3: -0.07
+  - LLAVA-OV: 0.08
+- inter-annotator upper bound: 0.68
 
-Teacher 모델 `ϕ_teach`로 privileged feedback 생성:
+또한 zero-shot feedback은 editing baseline 대비 IR 이득이 제한적입니다.
+
+결론:
+- 일반 MLLM은 memorability-specific direction이 내재적으로 약함
+- 추가 학습 또는 steering 메커니즘이 필요
+
+---
+
+## 4) MemCoach Method (Technical Deep Dive)
+MemCoach는 **teacher-student steering** 기반 3단계 구성입니다.
+
+### 4.1 Contrasting Data Generation
+씬 `i`의 이미지 집합 `X_i = {x_1^i, ..., x_M^i}`에서:
+- `x_S^i`: least memorable
+- `x_D^i`: most memorable
+
+Teacher `ϕ_teach`가 privileged feedback 생성:
 - `f_i^+ = ϕ_teach(x_S^i, x_D^i, p_a)`
 
-Student 모델 `ϕ_stud`의 neutral feedback 생성:
+Student `ϕ_stud`가 neutral feedback 생성:
 - `f_i^- = ϕ_stud(x_S^i, p_m)`
 
-대조쌍:
+대조 데이터:
 - `F^+ = {f_i^+}_i`
 - `F^- = {f_i^-}_i`
 
-### 3.2 Steering Vector Extraction
-같은 `(x_S^i, p_m)` 조건에서 assistant 답변만 `f_i^+` vs `f_i^-`로 바꿔 student activation을 수집합니다.
+Prompt 의미:
+- `p_a`: source→destination 변환에 필요한 행동 추출
+- `p_m`: source 이미지의 memorability를 높이기 위한 행동 제안
+
+### 4.2 Steering Vector Extraction
+동일 `(x_S^i, p_m)` 조건에서 assistant 답변만 `f_i^+`/`f_i^-`로 바꾸어 student activation 수집.
 
 레이어 `l`에서 steering vector:
 
@@ -61,96 +105,156 @@ Student 모델 `ϕ_stud`의 neutral feedback 생성:
 r^(l) = (1/N) * Σ_i ( h_{+,i}^(l) - h_{-,i}^(l) )
 ```
 
-핵심은 sample-wise difference를 먼저 계산하고 평균내는 구조입니다.
-논문 ablation에서도 이 방식이 `diff(mean)`보다 좋다고 보고합니다.
+직관:
+- `h_+ - h_-`는 "memorability-aware direction"
+- 평균 벡터 `r^(l)`는 그 방향의 distilled latent signal
 
-### 3.3 Inference-Time Steering
-추론 시 student activation `h^(l)`를 아래처럼 이동:
+### 4.3 Inference-Time Steering
+추론 시 student activation 이동:
 
 ```text
 h_tilde^(l) = h^(l) + α * r^(l)
 ```
 
 - `α`: steering strength
-- 논문 기본값: `l=12`, `α=55` (InternVL3.5-8B 기준)
+- 논문 기본값: `l=12`, `α=55` (InternVL3.5-8B)
 
 장점:
 - training-free
-- backbone-agnostic (activation 접근 가능하면 적용 가능)
+- model-agnostic (activation 접근 가능 시)
+- low-data에서도 적용 가능
 
 <figure class="media-panel">
   <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/method.webp" alt="MemCoach method overview" loading="lazy" />
-  <figcaption>MemCoach 방법 개요. Source: official project/repo figure.</figcaption>
+  <figcaption>MemCoach pipeline (paper figure).</figcaption>
 </figure>
 
-## 4. MemBench: Dataset and Evaluation Design
-MemBench는 PPR10K 기반으로 구축됩니다.
-- 약 10K 이미지
+---
+
+## 5) MemBench: Dataset and Evaluation
+MemBench는 PPR10K 기반으로 구축된 memorability-feedback 벤치마크입니다.
+
+논문 보고 통계:
+- 약 10K images
 - 1,570 scenes
-- scene당 평균 6.5 이미지
+- scene당 평균 6.5 images
 
-생성 파이프라인:
+구축 파이프라인:
 1. scene grouping
-2. memorability regression (`M`)
+2. predictor `M`로 memorability scoring
 3. scene 내부 ranking
-4. low→high pair로 action feedback 생성
-
-### 4.1 Metrics
-논문은 평가를 2축으로 설계합니다.
-
-1. Editing-based effectiveness
-- 편집 모델 `e(x_S, a)`로 feedback 적용 결과 `x_hat_D` 생성
-- **IR (Improvement Ratio)**: `m_D >= m_S` 비율
-- **RM (Relative Memorability)**: `(m_D - m_S) / m_S`
-
-2. Feedback likelihood
-- ground-truth memorability-aware feedback에 대한 perplexity
-
-이 설계는 “문장이 자연스러운가”와 “실제로 개선되는가”를 동시에 보려는 점이 강점입니다.
+4. low→high image pair 생성
+5. captioning model로 actionable feedback 생성
 
 <figure class="media-panel">
   <img src="https://raw.githubusercontent.com/laitifranz/MemCoach/main/docs/static/images/paper/data-pipeline.webp" alt="MemBench pipeline" loading="lazy" />
-  <figcaption>MemBench 구축 및 평가 파이프라인. Source: official project/repo figure.</figcaption>
+  <figcaption>MemBench data generation and evaluation protocol.</figcaption>
 </figure>
 
-## 5. Quantitative Results (Paper)
-논문 Table 2(InternVL 기반 MemCoach) 핵심 수치:
+### 5.1 Evaluation Metrics
+평가 축은 2개입니다.
 
-| Model | IR ↑ | RM% ↑ | PPL ↓ |
+1. **Editing-based effectiveness**
+- 편집 모델 `e(x_S, a)`로 edited image `x_hat_D` 생성
+- **IR**: `P[ m_D >= m_S ]`
+- **RM**: `(m_D - m_S) / m_S`
+
+2. **Feedback likelihood**
+- memorability-aware GT feedback에 대한 perplexity
+- 낮을수록 alignment가 좋음
+
+강점:
+- "말이 그럴듯한지"와 "실제로 좋아지는지"를 분리 측정
+
+---
+
+## 6) Main Experimental Results
+아래 표는 논문 reported 수치를 그대로 요약한 것입니다.
+
+### 6.1 Table 2 Summary (MemFeed Benchmarks)
+| Family | Model | IR ↑ | RM% ↑ | PPL ↓ |
+|---|---|---:|---:|---:|
+| Editing baseline | Empty feedback | 0.68 | 3.72 | n.d. |
+| Teacher oracle | LLAVA-OV | 0.74 | 5.93 | 5.73 |
+| Teacher oracle | IDEFICS3 | 0.80 | 9.84 | 29.21 |
+| Teacher oracle | QWEN2.5VL | 0.83 | 10.16 | 2.34 |
+| Teacher oracle | INTERNVL3.5 | 0.85 | 11.92 | 2.40 |
+| Aesthetic specialized | AESEXPERT | 0.73 | 6.67 | 5.97 |
+| Aesthetic specialized | Q-INSTRUCT | 0.73 | 5.31 | 5.36 |
+| Zero-shot | GPT-5 mini | 0.75 | 7.03 | n.d. |
+| Zero-shot | LLAVA-OV | 0.70 | 5.87 | 7.58 |
+| Zero-shot | IDEFICS3 | 0.73 | 6.64 | 20.19 |
+| Zero-shot | QWEN2.5VL | 0.68 | 4.26 | 10.23 |
+| Zero-shot | INTERNVL3.5 | 0.73 | 5.47 | 5.49 |
+| **Ours** | **MemCoach (InternVL)** | **0.80** | **7.21** | **4.99** |
+
+포인트:
+- InternVL zero-shot→MemCoach에서 IR/RM/PPL 동시 개선
+- training-free임에도 경쟁력 있는 수치 달성
+
+### 6.2 Table 3 Summary (Cross-backbone Generalization)
+| Backbone | Baseline IR | MemCoach IR | ΔIR |
 |---|---:|---:|---:|
-| Zero-shot InternVL3.5 | 0.73 | 5.47 | 5.49 |
-| Zero-shot GPT-5 mini | 0.75 | 7.03 | n.d. |
-| MemCoach (InternVL) | **0.80** | **7.21** | **4.99** |
+| LLAVA-OV | 0.70 | 0.73 | +4.29% |
+| IDEFICS3 | 0.73 | 0.75 | +2.74% |
+| QWEN2.5VL | 0.68 | 0.74 | +8.82% |
+| INTERNVL3.5 | 0.73 | 0.80 | +9.59% |
+
+포인트:
+- 특정 모델 트릭이 아니라 steering 방향의 일반성 시사
+
+---
+
+## 7) Ablation and Mechanistic Reading
+논문에서 중요한 ablation 메시지:
+
+1. **Data efficiency**
+- low-data에서 steering이 LoRA fine-tuning 대비 효율적인 구간 존재
+
+2. **Steering coefficient α**
+- α 증가 초기에 성능 증가, 이후 saturation
+
+3. **Difference operator design**
+- sample-wise difference 후 평균(제안식)이
+- 평균 후 difference(`diff(mean)`)보다 성능이 좋음
 
 해석:
-- zero-shot 대비 IR/RM/PPL 동시 개선
-- aesthetics-specialized MLLM들 대비도 경쟁력 있음
+- memorability signal이 per-sample contrast에서 더 선명하게 추출됨
 
-Table 3 일반화 결과도 중요합니다.
-- LLAVA, IDEFICS, QWEN, INTERNVL 백본 전반에서 IR 개선 보고
-- 즉, 특정 백본 특화 기법이 아니라 activation-space steering의 일반성이 메시지
+---
 
-## 6. Ablation Insights
-논문에서 세미나 토론에 유용한 포인트:
-- **Data efficiency**: low-data에서도 LoRA fine-tune 대비 유리한 구간 보고
-- **Steering coefficient α**: 증가 초기에 성능 상승, 이후 포화
-- **Teacher choice**: teacher를 바꾸면 성능 변화가 생기지만 steering 이득 자체는 유지
-
-## 7. Critical Discussion
+## 8) Critical Appraisal
 강점:
-1. 문제 정의 자체가 명확하고 실사용 맥락과 정합적
-2. training-free로 구현 부담이 낮음
-3. 평가를 텍스트 품질 + 편집 기반 효과로 분리해 설계
+1. 문제 설정의 실용성(사용자 행동 단위)
+2. training-free 적용성
+3. 텍스트 품질+실효성 분리 평가
 
 한계:
-1. `M` predictor와 `e` editor에 대한 의존성(평가 파이프라인 편향 가능)
-2. memorability의 개인/문화 편차를 평균화해 다룸
-3. “distinctiveness”를 과도하게 정규화하는 failure mode 가능
+1. 평가가 `predictor M`과 `editor e`에 의존
+2. memorability의 개인/문화 편차를 평균화
+3. distinctiveness를 잃는 방향의 과도한 정규화 실패 가능
 
-## 8. Seminar Takeaways
-1. MemFeed는 memorability 연구의 objective를 바꾼다.
-2. MemCoach의 본질은 parameter update가 아니라 latent steering이다.
-3. 향후 확장은 personalization(사용자별 기억 특성)과 closed-loop human study가 핵심이다.
+열린 질문:
+- 개인화 memorability profile을 넣으면 성능이 어떻게 바뀌는가?
+- 편집 모델 의존성을 줄인 human-in-the-loop 평가는 어떻게 설계할 것인가?
+- 단기 recall과 장기 recall 간 상관을 어떻게 검증할 것인가?
+
+---
+
+## 9) Reproducibility Checklist (for Lab Discussion)
+1. 동일 scene 기반 pair 구성 재현 여부
+2. teacher/student prompt consistency 검증
+3. steering layer `l`, coefficient `α` 스윕 로그 확보
+4. predictor/editor 바꿨을 때 ranking robustness 확인
+5. IR/RM/PPL 외 human evaluation 보강
+
+---
+
+## 10) Seminar Closing Message
+이 논문의 공헌은 성능 수치 하나가 아니라, 목표 함수를 바꿨다는 점입니다.
+
+- Memorability는 더 이상 "맞히는 값"만이 아니라,
+- 사람에게 "가르칠 수 있는 행동 지식"으로 다뤄질 수 있습니다.
 
 ## References
 - Paper (arXiv): [https://arxiv.org/abs/2602.21877](https://arxiv.org/abs/2602.21877)
