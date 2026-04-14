@@ -12,7 +12,7 @@ title: ""
     한 번에 볼 수 있게 구성한 세미나 페이지입니다.
   </p>
   <p class="hero-actions">
-    <a class="btn-primary" href="{% post_url 2026-04-14-how-to-take-a-memorable-picture-memcoach %}">논문 포스트 보기</a>
+    <a class="btn-primary" href="{{ site.baseurl }}{% post_url 2026-04-14-how-to-take-a-memorable-picture-memcoach %}">논문 포스트 보기</a>
     <a class="btn-secondary" href="{{ '/presentation-notes/' | relative_url }}">발표 노트 보기</a>
   </p>
 </section>
@@ -33,6 +33,6 @@ title: ""
 </section>
 
 ## Quick Access
-- [논문 리뷰 포스트]({% post_url 2026-04-14-how-to-take-a-memorable-picture-memcoach %})
+- [논문 리뷰 포스트]({{ site.baseurl }}{% post_url 2026-04-14-how-to-take-a-memorable-picture-memcoach %})
 - [5분/10분 발표 노트]({{ '/presentation-notes/' | relative_url }})
 - [참고 링크 모음]({{ '/resources/' | relative_url }})
