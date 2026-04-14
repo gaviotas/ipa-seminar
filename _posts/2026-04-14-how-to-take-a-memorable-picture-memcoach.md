@@ -241,7 +241,6 @@ MemBench는 PPR10K 기반으로 구축된 memorability-feedback 벤치마크입�
   <table>
     <thead>
       <tr>
-        <th>Family</th>
         <th>Model</th>
         <th>IR ↑</th>
         <th>RM% ↑</th>
@@ -249,19 +248,28 @@ MemBench는 PPR10K 기반으로 구축된 memorability-feedback 벤치마크입�
       </tr>
     </thead>
     <tbody>
-      <tr><td>Editing baseline</td><td>Empty feedback</td><td>0.68</td><td>3.72</td><td>n.d.</td></tr>
-      <tr><td>Teacher oracle</td><td>LLAVA-OV</td><td>0.74</td><td>5.93</td><td>5.73</td></tr>
-      <tr><td>Teacher oracle</td><td>IDEFICS3</td><td>0.80</td><td>9.84</td><td>29.21</td></tr>
-      <tr><td>Teacher oracle</td><td>QWEN2.5VL</td><td>0.83</td><td>10.16</td><td>2.34</td></tr>
-      <tr><td>Teacher oracle</td><td>INTERNVL3.5</td><td>0.85</td><td>11.92</td><td>2.40</td></tr>
-      <tr><td>Aesthetic specialized</td><td>AESEXPERT</td><td>0.73</td><td>6.67</td><td>5.97</td></tr>
-      <tr><td>Aesthetic specialized</td><td>Q-INSTRUCT</td><td>0.73</td><td>5.31</td><td>5.36</td></tr>
-      <tr><td>Zero-shot</td><td>GPT-5 mini</td><td>0.75</td><td>7.03</td><td>n.d.</td></tr>
-      <tr><td>Zero-shot</td><td>LLAVA-OV</td><td>0.70</td><td>5.87</td><td>7.58</td></tr>
-      <tr><td>Zero-shot</td><td>IDEFICS3</td><td>0.73</td><td>6.64</td><td>20.19</td></tr>
-      <tr><td>Zero-shot</td><td>QWEN2.5VL</td><td>0.68</td><td>4.26</td><td>10.23</td></tr>
-      <tr><td>Zero-shot</td><td>INTERNVL3.5</td><td>0.73</td><td>5.47</td><td>5.49</td></tr>
-      <tr><td><strong>Ours</strong></td><td><strong>MemCoach (InternVL)</strong></td><td><strong>0.80</strong></td><td><strong>7.21</strong></td><td><strong>4.99</strong></td></tr>
+      <tr class="table-group"><td colspan="4">Editing baseline</td></tr>
+      <tr><td>Empty feedback</td><td>0.68</td><td>3.72</td><td>n.d.</td></tr>
+
+      <tr class="table-group"><td colspan="4">Teacher oracles</td></tr>
+      <tr><td>LLAVA-OV</td><td>0.74</td><td>5.93</td><td>5.73</td></tr>
+      <tr><td>IDEFICS3</td><td>0.80</td><td>9.84</td><td>29.21</td></tr>
+      <tr><td>QWEN2.5VL</td><td>0.83</td><td>10.16</td><td>2.34</td></tr>
+      <tr><td>INTERNVL3.5</td><td>0.85</td><td>11.92</td><td>2.40</td></tr>
+
+      <tr class="table-group"><td colspan="4">Aesthetics specialized</td></tr>
+      <tr><td>AESEXPERT</td><td>0.73</td><td>6.67</td><td>5.97</td></tr>
+      <tr><td>Q-INSTRUCT</td><td>0.73</td><td>5.31</td><td>5.36</td></tr>
+
+      <tr class="table-group"><td colspan="4">Zero-shot baselines</td></tr>
+      <tr><td>GPT-5 mini</td><td>0.75</td><td>7.03</td><td>n.d.</td></tr>
+      <tr><td>LLAVA-OV</td><td>0.70</td><td>5.87</td><td>7.58</td></tr>
+      <tr><td>IDEFICS3</td><td>0.73</td><td>6.64</td><td>20.19</td></tr>
+      <tr><td>QWEN2.5VL</td><td>0.68</td><td>4.26</td><td>10.23</td></tr>
+      <tr><td>INTERNVL3.5</td><td>0.73</td><td>5.47</td><td>5.49</td></tr>
+
+      <tr class="table-group"><td colspan="4">MemCoach (Ours)</td></tr>
+      <tr><td><strong>MemCoach (InternVL)</strong></td><td><strong>0.80</strong></td><td><strong>7.21</strong></td><td><strong>4.99</strong></td></tr>
     </tbody>
   </table>
 </div>
