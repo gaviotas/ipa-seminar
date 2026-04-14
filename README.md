@@ -1,5 +1,14 @@
-# IPA Seminar Blog
+# IPA Seminar Site
 
-세미나용 포스트는 `_posts` 디렉터리에 있습니다.
+GitHub Pages 기반 세미나 발표용 사이트입니다.
 
-- [How to Take a Memorable Picture? (2026-04-14)](_posts/2026-04-14-how-to-take-a-memorable-picture-memcoach.md)
+## Live Structure
+- Home: `index.md`
+- Paper Post: `_posts/2026-04-14-how-to-take-a-memorable-picture-memcoach.md`
+- Presentation Notes: `presentation-notes.md`
+- Resources: `resources.md`
+
+## Run Locally (optional)
+```bash
+bundle exec jekyll serve
+```

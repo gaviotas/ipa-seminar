@@ -1,0 +1,37 @@
+title: "IPA Seminar Notes"
+description: "Seminar-ready paper breakdowns with actionable insights"
+url: "https://gaviotas.github.io"
+baseurl: "/ipa-seminar"
+lang: "ko"
+timezone: "Asia/Seoul"
+
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+markdown: kramdown
+kramdown:
+  input: GFM
+
+minima:
+  skin: classic
+
+header_pages:
+  - papers.md
+  - presentation-notes.md
+  - resources.md
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: post
+      author: "LMH"
+      image: "/assets/images/og-memcoach.svg"
+  - scope:
+      path: ""
+    values:
+      image: "/assets/images/og-memcoach.svg"

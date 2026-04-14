@@ -1,0 +1,12 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#F2F8FF"/>
+  <rect x="42" y="42" width="1116" height="546" rx="28" fill="white" stroke="#C6D9EF" stroke-width="4"/>
+  <rect x="78" y="86" width="178" height="34" rx="17" fill="#0F4C81"/>
+  <text x="102" y="109" fill="white" font-size="18" font-family="Arial, sans-serif" font-weight="700">IPA SEMINAR</text>
+  <text x="78" y="196" fill="#10233A" font-size="54" font-family="Arial, sans-serif" font-weight="700">How to Take a Memorable Picture?</text>
+  <text x="78" y="252" fill="#344A66" font-size="34" font-family="Arial, sans-serif">Empowering Users with Actionable Feedback</text>
+  <text x="78" y="322" fill="#5B718A" font-size="28" font-family="Arial, sans-serif">CVPR 2026 · MemCoach · MemBench</text>
+  <rect x="78" y="376" width="1020" height="164" rx="18" fill="#EEF5FF"/>
+  <text x="108" y="438" fill="#0F4C81" font-size="30" font-family="Arial, sans-serif" font-weight="700">From prediction to actionable guidance</text>
+  <text x="108" y="484" fill="#2D425C" font-size="26" font-family="Arial, sans-serif">Seminar-ready breakdown, key claims, and critical discussion points</text>
+</svg>
