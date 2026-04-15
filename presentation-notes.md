@@ -25,8 +25,9 @@ permalink: /presentation-notes/
 - 멘트: 현장에서 필요한 것은 점수보다 다음 행동입니다.
 
 ### Slide 3. Task Definition (MemFeed)
-- `m_S = M(x_S), m_D = M(x_D), m_D > m_S`
+- \(m_S = M(x_S),\ m_D = M(x_D),\ m_D > m_S\)
 - actionable/interpretable/memorability-oriented 요구
+- 주의: \(x_D\)는 추론 시 입력이 아니라 benchmark/training construction에서만 쓰이는 target view
 - 멘트: 정답 텍스트 생성이 아니라 행동 유도 문제로 봐야 합니다.
 
 ### Slide 4. Why Not Plain MLLM
@@ -39,14 +40,14 @@ permalink: /presentation-notes/
 - 멘트: teacher privileged signal을 student latent direction으로 distill합니다.
 
 ### Slide 6. Contrasting Pair Construction
-- `f_i^+ = ϕ_teach(x_S^i, x_D^i, p_a)`
-- `f_i^- = ϕ_stud(x_S^i, p_m)`
+- \(f_i^+ = \phi_{\text{teach}}(x_S^i, x_D^i, p_a)\)
+- \(f_i^- = \phi_{\text{stud}}(x_S^i, p_m)\)
 - 멘트: 같은 source에서 aware vs neutral feedback을 대조합니다.
 
 ### Slide 7. Steering Equations
-- `r^(l) = (1/N) Σ_i (h_{+,i}^(l) - h_{-,i}^(l))`
-- `h_tilde^(l) = h^(l) + α * r^(l)`
-- 기본값: `l=12, α=55`
+- \(r^{(l)} = \frac{1}{N}\sum_i\left(h_{+,i}^{(l)} - h_{-,i}^{(l)}\right)\)
+- \(\tilde{h}^{(l)} = h^{(l)} + \alpha r^{(l)}\)
+- 기본값: \(l=12,\ \alpha=55\)
 - 멘트: 파라미터 업데이트 대신 activation 이동으로 행동을 바꿉니다.
 
 ### Slide 8. MemBench and Protocol
@@ -65,8 +66,8 @@ permalink: /presentation-notes/
 
 ### Slide 11. Ablation & Failure Modes
 - low-data 효율, α saturation, diff-operator 중요성
-- distinctiveness 손실 failure 사례
-- 멘트: 성능 향상과 함께 어떤 시각적 다양성을 희생하는지도 봐야 합니다.
+- Figure 7 failure case: out-of-context object를 제거하면 distinctiveness까지 사라져 RM이 오히려 떨어질 수 있음
+- 멘트: 성능 향상과 함께 어떤 시각적 다양성을 희생하는지도 봐야 합니다. 이 논문은 '깔끔함'과 '기억남음'이 항상 같은 방향이 아니라는 점을 보여줍니다.
 
 ### Slide 12. Takeaways & Open Questions
 - objective 전환의 의미

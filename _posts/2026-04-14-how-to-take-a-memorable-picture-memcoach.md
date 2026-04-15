@@ -78,6 +78,10 @@ image: /assets/images/og-memcoach.svg
 목표:
 - 피드백 \\(a\\)를 생성해서 사용자 수정 후 \\(m_D > m_S\\)를 만족하도록 유도
 
+중요한 해석:
+- 여기서 \\(x_D\\)는 실제 inference 시 모델 입력으로 주어지는 이미지가 아니다.
+- \\(x_D\\)는 benchmark 구성과 teacher supervision을 위해 정의되는 target view이며, student는 추론 시 \\(x_S\\)만 관찰한다.
+
 요구 조건:
 1. **Actionable**: 실행 가능한 행동 단위 지시
 2. **Interpretable**: 사람에게 읽히는 자연어
@@ -94,7 +98,7 @@ image: /assets/images/og-memcoach.svg
     </thead>
     <tbody>
       <tr><td>\(x_S\)</td><td>Source image (현재 사용자 입력 이미지)</td></tr>
-      <tr><td>\(x_D\)</td><td>Destination image (개선 목표 이미지)</td></tr>
+      <tr><td>\(x_D\)</td><td>Destination image / target view (benchmark·teacher supervision용)</td></tr>
       <tr><td>\(M(\cdot)\)</td><td>Memorability predictor</td></tr>
       <tr><td>\(m_S, m_D\)</td><td>각 이미지의 memorability score</td></tr>
       <tr><td>\(a\)</td><td>생성할 actionable feedback 텍스트</td></tr>
