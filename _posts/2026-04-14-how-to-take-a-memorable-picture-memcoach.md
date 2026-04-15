@@ -68,7 +68,7 @@ image: /assets/images/og-memcoach.svg
 
 ---
 
-## 1.5) Related Work Map
+## Related Work Map
 MemCoach는 기존 연구의 정확한 한 축에만 속하기보다, 여러 흐름의 교차점에 위치합니다.
 
 ### A. Memorability Prediction

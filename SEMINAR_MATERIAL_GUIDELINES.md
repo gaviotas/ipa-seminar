@@ -40,6 +40,23 @@
 - 결과 해석과 비판적 논의는 분리한다.
 - “논문 주장”과 “내 해석”을 섞지 말고 구분해 쓴다.
 
+## Good Paper Post Tips
+- 초반 20%에서 독자가 논문의 문제, 기여, 위치를 바로 파악할 수 있어야 한다.
+- 메타 정보(title, venue, authors, affiliation)는 앞에 두고, teaser visual은 그 다음에 둔다.
+- 생소한 용어는 처음 나오는 자리에서 바로 설명한다.
+- benchmark 이름만 적지 말고 무엇을 측정하는 데이터셋인지 한 줄로 붙인다.
+- metric 약어(IR, RM, PPL 등)는 처음 등장하는 문장에서 바로 정의한다.
+- baseline 이름(editing baseline, teacher oracle 등)은 무엇을 의미하는지 짧게 풀어쓴다.
+- 기호는 notation table에 정리하되, 표 안 수식 렌더링도 꼭 확인한다.
+- task definition에서 train-time only 정보와 inference-time available information을 명확히 구분한다.
+- prompt 기반 방법이면 실제 prompt 문구 또는 핵심 제약을 요약해서 넣는다.
+- 알고리즘 설명은 \"무엇을 고정하고 무엇을 바꾸는가\"를 분명히 써야 이해가 빨라진다.
+- 결과는 숫자만 쓰지 말고 absolute gain과 relative gain을 함께 적는다.
+- qualitative result는 단순 예시가 아니라 성공/실패 해석까지 붙여야 한다.
+- related work는 나열보다 map 형태로 정리하는 편이 훨씬 이해가 쉽다.
+- 발표 자료를 겸할 경우, 문장 하나하나가 발표자가 그대로 읽어도 어색하지 않아야 한다.
+- 지나치게 예쁜 블로그보다 \"논문을 대체할 수 있는 설명 가능한 문서\"라는 목표를 우선한다.
+
 ## Visual / Design
 - 과한 장식보다 고급 미니멀 스타일이 세미나 자료에 잘 맞는다.
 - 타이포가 가장 중요하다.
