@@ -13,7 +13,7 @@ image: /assets/images/og-cogen.svg
 
 ## Paper At A Glance
 <div class="badge-row">
-  <span class="award-badge">EMNLP 2024 Best Paper Award</span>
+  <span class="paper-badge paper-badge-award">EMNLP 2024 Best Paper Award</span>
 </div>
 
 - **Title**: *CoGen: Learning from Feedback with Coupled Comprehension and Generation*

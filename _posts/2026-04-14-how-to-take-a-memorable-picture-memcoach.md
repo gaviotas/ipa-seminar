@@ -13,7 +13,7 @@ image: /assets/images/og-memcoach.svg
 
 ## Paper At A Glance
 <div class="badge-row">
-  <span class="highlight-badge">CVPR 2026 Highlight</span>
+  <span class="paper-badge paper-badge-highlight">CVPR 2026 Highlight</span>
 </div>
 
 - **Title**: *How to Take a Memorable Picture? Empowering Users with Actionable Feedback*

@@ -8,7 +8,7 @@ permalink: /papers/
   <h2>How to Take a Memorable Picture?</h2>
   <p class="muted">CVPR 2026 · Memorability · MLLM Steering</p>
   <div class="badge-row">
-    <span class="highlight-badge">Highlight</span>
+    <span class="paper-badge paper-badge-highlight">Highlight</span>
   </div>
   <p>
     사진의 기억도를 점수화하는 데서 나아가, 실제 촬영 순간에 적용 가능한
@@ -21,7 +21,7 @@ permalink: /papers/
   <h2>CoGen</h2>
   <p class="muted">EMNLP 2024 · Continual Learning · Reference Games</p>
   <div class="badge-row">
-    <span class="award-badge">Best Paper Award</span>
+    <span class="paper-badge paper-badge-award">Best Paper Award</span>
   </div>
   <p>
     speaker와 listener를 분리된 태스크로 보지 않고, 사람과의 상호작용 속에서

@@ -31,7 +31,7 @@ title: ""
     <h3>How to Take a Memorable Picture?</h3>
     <p class="muted">CVPR 2026 · Memorability · MLLM Steering</p>
     <div class="badge-row">
-      <span class="highlight-badge">Highlight</span>
+      <span class="paper-badge paper-badge-highlight">Highlight</span>
     </div>
     <p>
       memorability prediction을 actionable feedback generation 문제로 바꾼 논문으로,
@@ -43,7 +43,7 @@ title: ""
     <h3>CoGen</h3>
     <p class="muted">EMNLP 2024 · Continual Learning · Coupled Speaker/Listener</p>
     <div class="badge-row">
-      <span class="award-badge">Best Paper Award</span>
+      <span class="paper-badge paper-badge-award">Best Paper Award</span>
     </div>
     <p>
       reference game에서 generation과 comprehension을 함께 개선하는 방법으로,
