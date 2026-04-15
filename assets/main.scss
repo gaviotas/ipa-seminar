@@ -243,6 +243,25 @@ li {
   overflow: hidden;
 }
 
+.post-content .media-panel {
+  max-width: 100%;
+}
+
+.post-content .media-panel.media-panel-narrow {
+  max-width: 34rem;
+  margin: 1rem auto 1.45rem;
+}
+
+.post-content .media-panel.media-panel-medium {
+  max-width: 48rem;
+  margin: 1.05rem auto 1.5rem;
+}
+
+.post-content .media-panel.media-panel-wide {
+  max-width: 52rem;
+  margin: 1.1rem auto 1.55rem;
+}
+
 .media-panel img {
   width: 100%;
   display: block;
@@ -251,7 +270,8 @@ li {
 .media-panel figcaption {
   font-size: 0.9rem;
   color: var(--ink-soft);
-  padding: 0.62rem 0.78rem;
+  line-height: 1.62;
+  padding: 0.72rem 0.9rem 0.78rem;
   background: #f9fcff;
   border-top: 1px solid var(--line);
 }
@@ -442,6 +462,14 @@ table tbody tr:nth-child(even):not(.table-group) {
   .grid-3,
   .media-grid {
     grid-template-columns: 1fr;
+  }
+
+  .post-content .media-panel.media-panel-narrow,
+  .post-content .media-panel.media-panel-medium,
+  .post-content .media-panel.media-panel-wide {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .hero-card {
