@@ -19,7 +19,7 @@ image: /assets/images/og-memcoach.svg
 - **Title**: *How to Take a Memorable Picture? Empowering Users with Actionable Feedback*
 - **Venue**: CVPR 2026
 - **Recognition**: Highlight Award
-- **arXiv**: 2602.21877 (v2, 2026-03-19)
+- **arXiv**: [2602.21877](https://arxiv.org/abs/2602.21877) (v2, 2026-03-19)
 - **Project**: [MemCoach](https://laitifranz.github.io/MemCoach/)
 
 **Authors**
