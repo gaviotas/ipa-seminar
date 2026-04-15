@@ -30,6 +30,9 @@ title: ""
   <div class="paper-card">
     <h3>How to Take a Memorable Picture?</h3>
     <p class="muted">CVPR 2026 · Memorability · MLLM Steering</p>
+    <div class="badge-row">
+      <span class="highlight-badge">Highlight</span>
+    </div>
     <p>
       memorability prediction을 actionable feedback generation 문제로 바꾼 논문으로,
       MemFeed 정식화, MemCoach steering, MemBench 평가까지 정리했습니다.
@@ -39,6 +42,9 @@ title: ""
   <div class="paper-card">
     <h3>CoGen</h3>
     <p class="muted">EMNLP 2024 · Continual Learning · Coupled Speaker/Listener</p>
+    <div class="badge-row">
+      <span class="award-badge">Best Paper Award</span>
+    </div>
     <p>
       reference game에서 generation과 comprehension을 함께 개선하는 방법으로,
       data sharing, joint inference, continual learning loop를 중심으로 정리했습니다.

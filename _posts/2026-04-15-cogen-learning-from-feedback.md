@@ -12,8 +12,13 @@ image: /assets/images/og-cogen.svg
 > 목표: 이 포스트만으로 세미나 청중이 CoGen의 문제 설정, coupling 메커니즘, 학습식, 실험 결과를 이해할 수 있게 구성
 
 ## Paper At A Glance
+<div class="badge-row">
+  <span class="award-badge">EMNLP 2024 Best Paper Award</span>
+</div>
+
 - **Title**: *CoGen: Learning from Feedback with Coupled Comprehension and Generation*
 - **Venue**: EMNLP 2024 Main Conference
+- **Recognition**: Best Paper Award
 - **Paper**: [ACL Anthology 2024.emnlp-main.721](https://aclanthology.org/2024.emnlp-main.721/)
 - **arXiv**: [2408.15992](https://arxiv.org/abs/2408.15992)
 - **Code**: [lil-lab/cogen](https://github.com/lil-lab/cogen)

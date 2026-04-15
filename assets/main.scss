@@ -176,6 +176,38 @@ li {
   color: var(--brand-strong);
 }
 
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0.45rem 0 0.85rem;
+}
+
+.award-badge,
+.highlight-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  border-radius: 999px;
+  padding: 0.34rem 0.72rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+}
+
+.award-badge {
+  background: #fff5d9;
+  border-color: #ecd48a;
+  color: #7a5612;
+}
+
+.highlight-badge {
+  background: #eef6ff;
+  border-color: #cdddf0;
+  color: #234f79;
+}
+
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

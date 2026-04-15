@@ -12,8 +12,13 @@ image: /assets/images/og-memcoach.svg
 > 목표: 이 포스트만으로 세미나 청중이 논문 핵심 아이디어, 알고리즘, 실험 결과를 이해할 수 있게 구성
 
 ## Paper At A Glance
+<div class="badge-row">
+  <span class="highlight-badge">CVPR 2026 Highlight</span>
+</div>
+
 - **Title**: *How to Take a Memorable Picture? Empowering Users with Actionable Feedback*
 - **Venue**: CVPR 2026
+- **Recognition**: Highlight Award
 - **arXiv**: 2602.21877 (v2, 2026-03-19)
 - **Project**: [MemCoach](https://laitifranz.github.io/MemCoach/)
 
