@@ -68,6 +68,52 @@ image: /assets/images/og-memcoach.svg
 
 ---
 
+## 1.5) Related Work Map
+MemCoach는 기존 연구의 정확한 한 축에만 속하기보다, 여러 흐름의 교차점에 위치합니다.
+
+### A. Memorability Prediction
+- *What Makes an Image Memorable?* (CVPR 2011)
+- *Understanding and Predicting Image Memorability at a Large Scale* (ICCV 2015)
+
+이 계열은 "이미지가 얼마나 기억에 남는가"를 예측하는 데 집중합니다.
+MemCoach는 여기서 한 걸음 더 나아가, **예측값을 행동 지시로 변환**하는 문제를 다룹니다.
+
+### B. Memorability Editing / Modification
+- *How to Make an Image More Memorable?* (2017)
+- face/image memorability modification 계열 연구
+
+이 계열은 모델이 이미지를 직접 수정해 memorability를 높이려 합니다.
+반면 MemCoach는 이미지를 대신 바꾸지 않고, **사람이 직접 적용할 수 있는 feedback**을 생성합니다.
+
+### C. Human Guidance for Photography
+- *Adaptive Photographic Composition Guidance* (CHI 2020)
+- *The Photographer’s Eye* (CVPR 2025)
+
+이 계열은 사용자의 촬영/구도 판단을 돕는다는 점에서 MemCoach와 가장 실용적으로 가깝습니다.
+다만 대부분 memorability 자체를 직접 target으로 삼지는 않습니다.
+
+### D. Feedback / Critique Generation
+- aesthetics critique / image feedback generation 계열
+- 예: VILA (CVPR 2023), 사진 비평형 MLLM 연구들
+
+이 계열은 자연어 피드백을 생성하지만, 보통 목표는 aesthetic quality 또는 general critique입니다.
+MemCoach는 여기서 목적 함수를 **future recall**로 특화합니다.
+
+### E. Training-Free Steering / Activation Engineering
+- Style Vectors for Steering Generative LLMs
+- CAST (conditional activation steering)
+- 기타 activation engineering 계열
+
+이 계열은 행동/스타일/응답 성향을 weight update 없이 steering하는 연구입니다.
+MemCoach의 방법론적 핵심은 여기에 속하지만, 응용 대상이 **actionable feedback for memorability**라는 점이 차별점입니다.
+
+정리하면 MemCoach의 위치는 다음과 같습니다.
+- 문제 측면: memorability prediction → actionable feedback으로 확장
+- 방법 측면: training-free activation steering 채택
+- 응용 측면: capture-time human guidance에 초점
+
+---
+
 ## 2) Task Definition: Memorability Feedback (MemFeed)
 논문의 정식화(Section 3.1):
 - source image \\(x_S\\)
