@@ -13,3 +13,13 @@ permalink: /papers/
   </p>
   <p><a class="btn-primary" href="{{ site.baseurl }}{% post_url 2026-04-14-how-to-take-a-memorable-picture-memcoach %}">포스트 열기</a></p>
 </div>
+
+<div class="paper-card">
+  <h2>CoGen</h2>
+  <p class="muted">EMNLP 2024 · Continual Learning · Reference Games</p>
+  <p>
+    speaker와 listener를 분리된 태스크로 보지 않고, 사람과의 상호작용 속에서
+    data sharing과 joint inference로 함께 개선하는 접근을 다룹니다.
+  </p>
+  <p><a class="btn-primary" href="{{ site.baseurl }}{% post_url 2026-04-15-cogen-learning-from-feedback %}">포스트 열기</a></p>
+</div>
