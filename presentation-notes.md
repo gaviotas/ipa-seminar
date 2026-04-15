@@ -35,6 +35,7 @@ permalink: /presentation-notes/
 - 측정 방식: yes/no memorability 질문 후 token likelihood로 ranking을 만들고, GT ranking과 Spearman 비교
 - inter-annotator 0.68 = 사람끼리의 memorability judgment 일치도 ceiling
 - zero-shot IR 개선 한계
+- IR = 편집 후 memorability가 원본보다 커진 비율
 - editing baseline = empty feedback를 넣은 편집 결과
 - 멘트: VLM general capability만으로 memorability direction은 약합니다.
 

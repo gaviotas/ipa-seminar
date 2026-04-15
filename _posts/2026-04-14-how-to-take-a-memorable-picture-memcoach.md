@@ -126,6 +126,7 @@ image: /assets/images/og-memcoach.svg
   - 이는 서로 다른 사람 집단끼리의 memorability 판단 일치도 상한선에 해당하며, 인간 수준 ceiling처럼 해석할 수 있다.
 
 또한 zero-shot feedback은 **editing baseline** 대비 IR 이득이 제한적입니다.
+- 여기서 **IR (Improvement Ratio)** 는 편집 후 이미지의 memorability가 원본보다 커진 비율을 뜻한다.
 - 여기서 editing baseline은 feedback으로 **빈 문자열(empty string)** 을 넣은 경우다.
 - 즉, memorability-aware instruction 없이 편집 모델만 동작시켰을 때를 최소 기준선으로 두고 비교한 것이다.
 
