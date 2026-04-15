@@ -31,8 +31,10 @@ permalink: /presentation-notes/
 - 멘트: 정답 텍스트 생성이 아니라 행동 유도 문제로 봐야 합니다.
 
 ### Slide 4. Why Not Plain MLLM
-- LaMem Spearman near-zero 결과
+- LaMem: 사람 기반 memorability score가 달린 대표 benchmark
+- 측정 방식: yes/no memorability 질문 후 token likelihood로 ranking을 만들고, GT ranking과 Spearman 비교
 - zero-shot IR 개선 한계
+- editing baseline = empty feedback를 넣은 편집 결과
 - 멘트: VLM general capability만으로 memorability direction은 약합니다.
 
 ### Slide 5. MemCoach Overview

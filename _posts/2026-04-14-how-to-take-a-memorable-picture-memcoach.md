@@ -114,14 +114,19 @@ image: /assets/images/og-memcoach.svg
 ## 3) Why Baseline MLLMs Fail (Paper Evidence)
 논문은 먼저 zero-shot MLLM 한계를 보여줍니다.
 
-- LaMem yes/no 질의 기반 memorability 판별에서 Spearman이 거의 0 수준
+- **LaMem**은 대규모 image memorability benchmark로, 각 이미지에 대해 사람 실험 기반 memorability score가 부여된 데이터셋이다.
+- 논문은 LaMem 이미지 하나를 MLLM에 넣고 `"Is this image memorable? Output only yes or no."`라고 질문한 뒤,
+  `yes` 토큰 likelihood와 `no` 토큰 likelihood의 상대값을 memorability score proxy로 사용한다.
+- 이렇게 얻은 모델별 ranking을 LaMem의 ground-truth memorability ranking과 **Spearman rank correlation**으로 비교하면 거의 0 수준이다.
   - QWEN2.5VL: -0.06
   - INTERNVL3.5: -0.01
   - IDEFICS3: -0.07
   - LLAVA-OV: 0.08
 - inter-annotator upper bound: 0.68
 
-또한 zero-shot feedback은 editing baseline 대비 IR 이득이 제한적입니다.
+또한 zero-shot feedback은 **editing baseline** 대비 IR 이득이 제한적입니다.
+- 여기서 editing baseline은 feedback으로 **빈 문자열(empty string)** 을 넣은 경우다.
+- 즉, memorability-aware instruction 없이 편집 모델만 동작시켰을 때를 최소 기준선으로 두고 비교한 것이다.
 
 결론:
 - 일반 MLLM은 memorability-specific direction이 내재적으로 약함
