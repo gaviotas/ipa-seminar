@@ -158,6 +158,12 @@ Prompt 의미:
 - `p_a`: source→destination 변환에 필요한 행동 추출
 - `p_m`: source 이미지의 memorability를 높이기 위한 행동 제안
 
+코드 기준 실제 prompt 요약:
+- `p_a`: "Image A를 Image B로 바꾸기 위해 필요한 actions를 생성하라."  
+  추가 제약: 이미지 자체를 직접 지칭하지 말고, 각 action은 self-contained해야 하며, JSON `actions` 리스트로 출력
+- `p_m`: "입력 이미지의 memorability를 높이기 위해 필요한 actions를 생성하라."  
+  추가 제약: precise and well-informative semantic actions를 출력하고, 설정에 따라 comma-separated text 또는 JSON `actions` 리스트 형태 사용
+
 ### 4.2 Steering Vector Extraction
 동일 \\((x_S^i, p_m)\\) 조건에서 assistant 답변만 \\(f_i^+\\)/\\(f_i^-\\)로 바꾸어 student activation 수집.
 
