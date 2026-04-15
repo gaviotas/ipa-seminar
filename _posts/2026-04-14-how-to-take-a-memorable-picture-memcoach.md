@@ -123,6 +123,7 @@ image: /assets/images/og-memcoach.svg
   - IDEFICS3: -0.07
   - LLAVA-OV: 0.08
 - inter-annotator upper bound: 0.68
+  - 이는 서로 다른 사람 집단끼리의 memorability 판단 일치도 상한선에 해당하며, 인간 수준 ceiling처럼 해석할 수 있다.
 
 또한 zero-shot feedback은 **editing baseline** 대비 IR 이득이 제한적입니다.
 - 여기서 editing baseline은 feedback으로 **빈 문자열(empty string)** 을 넣은 경우다.
