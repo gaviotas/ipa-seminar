@@ -161,6 +161,19 @@ Prompt 의미:
 ### 4.2 Steering Vector Extraction
 동일 \\((x_S^i, p_m)\\) 조건에서 assistant 답변만 \\(f_i^+\\)/\\(f_i^-\\)로 바꾸어 student activation 수집.
 
+여기서 핵심은 **입력 조건을 통제한 controlled contrast**라는 점이다.
+- 바뀌지 않는 것: source image \\(x_S^i\\), user prompt \\(p_m\\)
+- 바뀌는 것: assistant answer only
+
+즉 student는 같은 이미지와 같은 질문을 보지만,
+- 한 번은 teacher가 만든 memorability-aware feedback \\(f_i^+\\)
+- 한 번은 student가 원래 내놓는 neutral feedback \\(f_i^-\\)
+
+을 assistant 슬롯에 둔 두 개의 시퀀스를 각각 forward pass 한다.
+
+이렇게 하면 activation 차이를 거의 순수하게 **response style / memorability-awareness 차이**로 해석할 수 있다.
+즉, 같은 입력에 대해 neutral response에서 memorability-aware response로 갈 때 latent representation이 어느 방향으로 이동하는지를 측정하는 절차라고 볼 수 있다.
+
 레이어 `l`에서 steering vector:
 
 $$
